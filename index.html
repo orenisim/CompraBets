@@ -12,18 +12,20 @@
 <body>
     <div class="container mx-auto shadow p-3 my-5 rounded">
         <img src="Images/Logo/png/logo-no-background.png" alt="compraBetsLogo" class="compraBetsLogo mx-auto my-4 img-fluid">
-        <form class="logInForm mx-auto">
+        <form class="logInForm mx-auto needs-validation" novalidate>
         <div class="form-floating mb-3 mt-4">
-            <input type="text" class="form-control" id="logInUserName" placeholder="User Name">
+            <input type="text" class="form-control" id="logInUserName" placeholder="User Name" required>
             <label for="logInUserName">User Name</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="logInPassword" placeholder="Password">
+            <input type="password" class="form-control" id="logInPassword" placeholder="Password" required>
             <label for="logInPassword">Password</label>
         </div>
         <p class="text-center my-4">Not a member? <a href="Register.html">Register</a></p>
         <input type="submit" class="btn btn-primary mx-auto mb-3" id="logInButton" value="Log In">
     </form>
     </div>
+
+    <script src="JS/index.js"></script>
 </body>
 </html>

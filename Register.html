@@ -15,32 +15,35 @@
     <div class="container mx-auto shadow p-3 my-5 rounded">
         <img src="Images/Logo/png/logo-no-background.png" alt="compraBetsLogo"
             class="compraBetsLogo mx-auto my-4 img-fluid">
-        <form class="registerForm mx-auto">
-            <div class="row">
+        <form class="registerForm mx-auto needs-validation" novalidate>
+            <div class="row my -2">
                 <div class="col-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="registerFirstName" placeholder="First Name">
+                        <input type="text" class="form-control" id="registerFirstName" placeholder="First Name" required>
                         <label for="registerFirstName">First Name</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="registerLastName" placeholder="Last Name">
-                        <label for="registerLastName">LastName</label>
+                        <input type="text" class="form-control" id="registerLastName" placeholder="Last Name" required>
+                        <label for="registerLastName">Last Name</label>
                     </div>
                 </div>
             </div>
             <div class="form-floating my-3">
-                <input type="text" class="form-control" id="registerUserName" placeholder="User Name">
+                <input type="text" class="form-control" id="registerUserName" placeholder="User Name" required>
                 <label for="registerUserName">User Name</label>
             </div>
-            <div class="form-floating">
-                <input type="password" class="form-control mb-3" id="registerPassword" placeholder="Password">
+            <div class="form-floating my-2">
+                <input type="password" class="form-control mb-3" id="registerPassword" placeholder="Password" required>
                 <label for="registerPassword">Password</label>
             </div>
             <input type="submit" class="btn btn-primary mx-auto my-3" id="registerButton" value="Sign In">
+            <p class="errtxt"></p>
         </form>
     </div>
+
+    <script src="JS/register.js"></script>
 </body>
 
 </html>

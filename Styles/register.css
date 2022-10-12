@@ -1,7 +1,7 @@
 .container  {
     display: block;
     max-width: 700px;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(219, 219, 219);
 }
 .registerForm {
     max-width: 400px;
@@ -13,6 +13,11 @@
 #registerButton {
     display: block;
     padding: 10px 50px;
+}
+.errtxt {
+    font-weight: bold;
+    font-size: 16px;
+    color: blue;
 }
 /*Mobile*/
 @media screen and (max-width: 576px) {
