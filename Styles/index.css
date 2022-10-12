@@ -1,34 +1,41 @@
-.container  {
-    display: block;
-    max-width: 700px;
-    background-color: rgb(247, 247, 247);
+body {
+  background-image: url("/Images/grass-background.jpeg");
+}
+.container {
+  display: block;
+  max-width: 700px;
+  /* Notice i changed the background-color */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+/* Notice i added the p style */
+p {
+  color: white;
 }
 .logInForm {
-    max-width: 400px;
+  max-width: 400px;
 }
 .compraBetsLogo {
-    display: block;
-    max-width: 500px;
+  display: block;
+  max-width: 500px;
 }
 #logInButton {
-    display: block;
-    padding: 10px 50px;
+  display: block;
+  padding: 10px 50px;
 }
 /*Mobile*/
 @media screen and (max-width: 576px) {
-    .container  {
-        display: block;
-        max-width: 400px;
-        margin-top: 50px !important;
-    }
-    .logInForm {
-        max-width: 300px;
-    }
-    .compraBetsLogo {
-        max-width: 350px;
-    }
+  .container {
+    display: block;
+    max-width: 400px;
+    margin-top: 50px !important;
+  }
+  .logInForm {
+    max-width: 300px;
+  }
+  .compraBetsLogo {
+    max-width: 350px;
+  }
 }
 /*Big Screens*/
 @media screen and (min-width: 1700px) {
-    
 }
