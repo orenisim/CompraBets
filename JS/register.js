@@ -73,5 +73,6 @@ signInForm.addEventListener('submit', e => {
     if(firstNameCheck() && lastNameCheck() && userNameCheck() && passCheck()) {
         signInForm.reset();
         alert("Done!")
+        window.location = "./joinLeague.html";
     } 
 })

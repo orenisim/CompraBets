@@ -1,0 +1,64 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CompraBets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+  <link rel="stylesheet" href="Styles/joinLeague.css" />
+</head>
+
+<body>
+  <!-- CompraBet logo format inside the site -->
+  <nav class="navbar bg-light opacity-75">
+    <div class="container-fluid mt-3 mb-4">
+      <a class="navbar-brand" href="./index.html"><img src="Images/Logo/green/png/logo-no-background.png"
+          alt="compraBetsLogo" class="compraBetsLogo img-fluid" /></a>
+      <div class="userSection">
+        Hello user, bla bla
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto shadow p-3 my-5 rounded">
+    <!-- Join existing league feature -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Join existing league</h2>
+      </div>
+      <div class="card-body">
+
+        <!--Search Group-->
+        <div class="input-group mb-3">
+          <div class="form-floating">
+            <input type="text" class="form-control" placeholder="Search league name or ID league"
+              aria-label="Seach League" aria-describedby="searchLeagueButton" id="searchLeagueInput">
+            <label for="searchLeagueInput">Search league name or ID league</label>
+          </div>
+          <button class="btn btn-success" type="button" id="searchLeagueButton">
+            <img src="Images/Icons/search.svg" alt="Search-Icon">
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Create new league feature -->
+    <div class="card" id="new league creator">
+      <div class="card-header">
+        <h2>Create new league</h2>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">League Name:</h5>
+        <input type="text" placeholder="Enter League Name" />
+        <h5 class="card-title">Password:</h5>
+        <input type="text" placeholder="Enter Password" />
+        <a href="#" class="btn btn-success">Create new league</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -4,4 +4,5 @@ logInForm.addEventListener('submit', e => {
     e.preventDefault();
     logInForm.classList.add('was-validated');
     logInForm.reset();
+    window.location = "./joinLeague.html";
 })

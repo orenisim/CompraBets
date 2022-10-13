@@ -13,13 +13,17 @@
 
 <body>
     <div class="container mx-auto shadow p-3 my-5 rounded">
-        <img src="Images/Logo/png/logo-no-background.png" alt="compraBetsLogo"
+        <!--Logo-->
+        <img src="Images/Logo/green/png/logo-no-background.png" alt="compraBetsLogo"
             class="compraBetsLogo mx-auto my-4 img-fluid">
+
+        <!--Register Form-->
         <form class="registerForm mx-auto needs-validation" novalidate>
             <div class="row my -2">
                 <div class="col-6">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="registerFirstName" placeholder="First Name" required>
+                        <input type="text" class="form-control" id="registerFirstName" placeholder="First Name"
+                            required>
                         <label for="registerFirstName">First Name</label>
                     </div>
                 </div>
@@ -38,11 +42,12 @@
                 <input type="password" class="form-control mb-3" id="registerPassword" placeholder="Password" required>
                 <label for="registerPassword">Password</label>
             </div>
-            <input type="submit" class="btn btn-primary mx-auto my-3" id="registerButton" value="Sign In">
-            <p class="errtxt"></p>
+            <input type="submit" class="btn btn-success mx-auto my-3" id="registerButton" value="Sign In">
         </form>
-    </div>
 
+    </div>
+     
+    <!--Java Script-->
     <script src="JS/register.js"></script>
 </body>
 
