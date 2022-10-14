@@ -12,47 +12,79 @@
     />
     <link rel="stylesheet" href="Styles/joinLeague.css" />
   </head>
+
   <body>
     <!-- CompraBet logo format inside the site -->
-    <nav class="navbar bg-light">
-      <div class="container-fluid">
+    <nav class="navbar bg-light opacity-75">
+      <div class="container-fluid mt-3 mb-4">
         <a class="navbar-brand" href="./index.html"
           ><img
-            src="Images/Logo/png/logo-no-background.png"
+            src="Images/Logo/green/png/logo-no-background.png"
             alt="compraBetsLogo"
-            class="compraBetsLogo mx-auto my-4 img-fluid"
+            class="compraBetsLogo img-fluid"
         /></a>
+        <div class="userSection">Hello user, bla bla</div>
       </div>
     </nav>
 
     <div class="container mx-auto shadow p-3 my-5 rounded">
       <!-- Join existing league feature -->
       <div class="card">
-        <div class="card-header"><h2>Join existing league</h2></div>
+        <div class="card-header">
+          <h2 class="mx-auto">Join existing league</h2>
+        </div>
         <div class="card-body">
-          <h5 class="card-title">league ID:</h5>
-          <input type="text" placeholder="Enter League ID" />
-          <br />
-          <br />
-          <a href="#" class="btn btn-primary">Join league</a>
+          <!--Search Group-->
+          <div class="input-group mb-3">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search league name or ID league"
+                aria-label="Seach League"
+                aria-describedby="searchLeagueButton"
+                id="searchLeagueInput"
+              />
+              <label for="searchLeagueInput">Search league by Name or ID</label>
+            </div>
+            <button
+              class="btn btn-success"
+              type="button"
+              id="searchLeagueButton"
+            >
+              <img src="Images/Icons/search.svg" alt="Search-Icon" />
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Create new league feature -->
       <div class="card" id="new league creator">
-        <div class="card-header"><h2>Create new league</h2></div>
-        <div class="card-body">
+        <div class="card-header">
+          <h2>Create new league</h2>
+          <button id="addLeagueButton" class="btn btn-success">+</button>
+        </div>
+        <div id="createLeageForm" class="card-body d-none">
+          <button id="closeAddLeagueForm" class="btn btn-success">x</button>
           <h5 class="card-title">League Name:</h5>
-          <input type="text" placeholder="Enter League Name" />
-          <br />
-          <br />
+          <input
+            type="text"
+            placeholder="Enter League Name"
+            class="form-control"
+            required
+          />
           <h5 class="card-title">Password:</h5>
-          <input type="text" placeholder="Enter Password" />
-          <br />
-          <br />
-          <a href="#" class="btn btn-primary">Create new league</a>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            class="form-control"
+            required
+          /><br />
+          <button class="btn btn-success">Create New League</button>
         </div>
       </div>
     </div>
+
+    <script src="js/joinLeague.js"></script>
   </body>
 </html>

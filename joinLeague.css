@@ -1,0 +1,38 @@
+.compraBetsLogo {
+  display: block;
+  max-width: 150px;
+}
+
+body {
+  background-image: url("/Images/grass-background-v2.jpeg") !important;
+}
+
+.navbar-brand {
+  margin-left: 75px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.699);
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.userSection {
+  margin-right: 75px;
+  font-weight: bold;
+}
+#searchLeagueButton {
+  padding: 3px 45px;
+}
+#addLeagueButton {
+  padding: 3px 45px;
+  position: relative;
+  bottom: 36.2px;
+  right: -300px;
+}
+#closeAddLeagueForm {
+  position: relative;
+  bottom: 15px;
+  right: -550px;
+}
