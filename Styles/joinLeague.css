@@ -10,16 +10,17 @@ body {
 .navbar-brand {
   margin-left: 75px;
 }
-
-.card {
+.container {
   background-color: rgba(255, 255, 255, 0.699);
+  margin: auto;
+  width: 100%;
+  padding: 10px;
 }
-
-.userSection {
-  margin-right: 75px;
-  font-weight: bold;
+/* center the button */
+#createNewLeagueButton {
+  margin: auto;
+  display: block;
 }
-
 #searchLeagueButton {
   padding: 3px 45px;
 }
