@@ -1,30 +1,21 @@
+/* for the upper page */
 .compraBetsLogo {
   display: block;
   max-width: 175px;
 }
-
+/* for the grass background of the site */
 body {
   background-image: url("../Images/grass-background-v2.jpeg");
 }
-
-.navbar-brand {
-  margin-left: 75px;
-}
+/* for the background of the containers */
 .container {
   background-color: rgba(255, 255, 255, 0.699);
   margin: auto;
   width: 100%;
   padding: 10px;
 }
-/* center the button */
+/* center a button */
 #createNewLeagueButton {
   margin: auto;
   display: block;
-}
-#submitButton {
-  margin: auto;
-  display: block;
-}
-#searchLeagueButton {
-  padding: 3px 45px;
 }

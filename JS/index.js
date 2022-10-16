@@ -1,8 +1,8 @@
-const logInForm = document.querySelector('.logInForm');
+const logInForm = document.querySelector(".logInForm");
 
-logInForm.addEventListener('submit', e => {
-    e.preventDefault();
-    logInForm.classList.add('was-validated');
-    logInForm.reset();
-    window.location = "./joinLeague.html";
-})
+logInForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  logInForm.classList.add("was-validated");
+  logInForm.reset();
+  window.location = "./joinLeague.html";
+});

@@ -1,5 +1,5 @@
 body {
-  background-image: url("/Images/grass-background-v2.jpeg");
+  background-image: url("../Images/grass-background-v2.jpeg");
 }
 
 .container {
@@ -45,5 +45,4 @@ p {
 
 /*Big Screens*/
 @media screen and (min-width: 1700px) {
-  
 }
