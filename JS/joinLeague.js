@@ -1,3 +1,8 @@
+import { auth, logOutUser } from "./usersFireBase.js";
+import { onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js';
+
+
 //indicators to the relebent html for the add new league option
 const createNewLeagueButton = document.querySelector("#createNewLeagueButton");
 const newLeagueForm = document.querySelector(".newLeagueForm");
@@ -25,4 +30,23 @@ const filterLeaguea = (term) => {
 searchLeague.addEventListener("keyup", () => {
   const term = searchLeague.value.trim();
   filterLeaguea(term);
+});
+
+
+
+//change the deafult user name
+const userDiv = document.querySelector('.userSection');
+
+// Get user that already log in
+onAuthStateChanged(auth, (user) => {
+  userDiv.textContent = `Hello ${user.displayName}, Welcome back!`;
+});
+
+//log out from user
+const logOutButton = document.querySelector('.logOutButton');
+logOutButton.addEventListener('click', () => {
+  logOutUser().then(() => {
+    alert("log out");
+    window.location = "./index.html";
+  })
 });

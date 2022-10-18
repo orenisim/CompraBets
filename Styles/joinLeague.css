@@ -10,24 +10,29 @@ body {
 .navbar-brand {
   margin-left: 75px;
 }
+
 .container {
   background-color: rgba(255, 255, 255, 0.699);
   margin: auto;
   width: 100%;
   padding: 10px;
 }
+
 /* center the button */
 #createNewLeagueButton {
   margin: auto;
   display: block;
 }
+
 #submitButton {
   margin: auto;
   display: block;
 }
+
 #searchLeagueButton {
   padding: 3px 45px;
 }
+
 .filterd {
   display: none !important;
 }

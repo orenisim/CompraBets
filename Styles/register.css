@@ -22,10 +22,8 @@ body {
     padding: 10px 50px;
 }
 
-.errtxt {
+.errmsg {
     font-weight: bold;
-    font-size: 16px;
-    color: blue;
 }
 
 /*Mobile*/
