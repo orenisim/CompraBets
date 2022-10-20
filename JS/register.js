@@ -1,4 +1,4 @@
-import { createUser } from "./usersFirebase.js";
+import { auth, createUser, EmailVerification, } from "./usersFirebase.js";
 
 const signInForm = document.querySelector('.registerForm');
 const firstNameElement = signInForm.registerFirstName;
@@ -95,6 +95,8 @@ signInForm.addEventListener('submit', e => {
             .then(() => {
                 errmsg.textContent = '';
                 signInForm.reset();
+                //Send Email Verification
+                EmailVerification(auth);
 
                 //just fot test!! 
                 alert('Done!');

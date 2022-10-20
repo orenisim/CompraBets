@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CompraBets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../Styles/userPage.css" />
+</head>
+
+<body>
+
+    <!-- CompraBet logo format inside the site -->
+    <nav class="navbar bg-light opacity-75">
+        <div class="container-fluid my-3">
+            <a class="navbar-brand" href="./index.html"><img src="../Images/Logo/green/png/logo-no-background.png"
+                    alt="compraBetsLogo" class="compraBetsLogo" /></a>
+            <div class="userSection me-5 mt-2">
+                <span class="userWelcome">
+                    Hello
+                    <a href="./userPage.html" class="userNameHref text-success fw-bold"></a>
+                    , Welcome back!
+                </span>
+                <input type="button" value="Log-Out"
+                    class="logOutButton btn btn-sm btn-outline-dark fw-bold p-0 px-1 mb-1 ms-2">
+            </div>
+        </div>
+    </nav>
+
+    <!-- container for the inside pages -->
+    <div class="container mx-auto shadow p-3 my-5 rounded">
+        <div class="row d-flex justify-content-center align-items-center my-4 opacity-75">
+            <div class="col col-lg-10 mb-4 mb-lg-0">
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-body p-4">
+                                <!-- information div -->
+                                <h6>Information</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-5 mb-3">
+                                        <h6>User Name</h6>
+                                        <p class="userNameP text-muted"></p>
+                                    </div>
+                                    <div class="col-5 mb-3">
+                                        <h6>Email</h6>
+                                        <p class="userEmailP text-muted">info@example.com</p>
+                                    </div>
+                                </div>
+                                <!-- League div -->
+                                <h6>League</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Recent</h6>
+                                        <p class="text-muted">Lorem ipsum</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Most Viewed</h6>
+                                        <p class="text-muted">Dolor sit amet</p>
+                                    </div>
+                                </div>
+                                <!-- Email div -->
+                                <h6>Email Verification</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1 my-3">
+                                    <div class="col-6 mb-3">
+                                        <h6>Send email verification again</h6>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <input type="button" class="emailVerButton btn btn-sm p-0 btn-success mb-1 px-5"
+                                            value="Send">
+                                    </div>
+                                </div>
+                                <!-- password div -->
+                                <h6>Password Reset</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>I want to change my password</h6>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <input type="button" class="passResetButton btn btn-sm p-0 btn-success mb-1 px-5 ms-3"
+                                            value="Change">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- table for the myTable page -->
+
+    <script src="../JS/userPage.js" type="module"></script>
+</body>
+
+</html>

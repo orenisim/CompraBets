@@ -1,4 +1,4 @@
-import { logInUser } from "./usersFireBase.js";
+import { auth, logInUser, PassReset, getUserObjectFromUserName } from "./usersFireBase.js";
 
 const logInForm = document.querySelector(".logInForm");
 const userNameElement = logInForm.logInUserName;
@@ -16,7 +16,7 @@ logInForm.addEventListener("submit", (e) => {
 
       //just fot test!! 
       alert('Log in');
-  
+
       logInForm.reset();
       window.location = "./joinLeague.html";
     })
@@ -27,4 +27,14 @@ logInForm.addEventListener("submit", (e) => {
         errmsg.textContent = `* ${err.message} *`;
       }
     })
+});
+
+//Send Email Password reset
+const passResetButton = document.querySelector('.passResetButton');
+passResetButton.addEventListener('click', async () => {
+  const user = await getUserObjectFromUserName(userNameElement.value);
+  const email = user.email;
+  PassReset(auth, email)
+    .then(() => passResetButton.setAttribute('value', 'Email Sent!'))
+    .catch(err => console.log(err));
 });

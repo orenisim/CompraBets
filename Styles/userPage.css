@@ -1,0 +1,29 @@
+/* for the upper page */
+.compraBetsLogo {
+    display: block;
+    max-width: 200px;
+}
+
+/* for the grass background of the site */
+body {
+    background-image: url("../Images/grass-background-v2.jpeg");
+}
+
+/* for the background of the containers */
+.container {
+    background-color: rgba(255, 255, 255, 0.699);
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+/* take the logo 75px to the right */
+.navbar-brand {
+    margin-left: 75px;
+}
+
+/* user section font size */
+.userSection {
+    font-size: 19px;
+}
+

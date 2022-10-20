@@ -65,17 +65,33 @@ export const createUser = async (firstName, lastName, userName, email, pass) => 
 
 
 //log in into Auth with display name
-export const logInUser = async (userName, pass) => {
+export const getUserObjectFromUserName = async (userName) => {
     const q = query(usersColRef, where("displayNameLowerCase", "==", userName.toLowerCase()));
     const docs = await getDocs(q);
     let user;
     //only one element
     docs.forEach(doc => user = doc.data());
     if (!user) throw TypeError("Wrong User Name");
+    return user;
+
+}
+export const logInUser = async (userName, pass) => {
+    const user = await getUserObjectFromUserName(userName);
     await signInWithEmailAndPassword(auth, user.email, pass)
 }
+
 
 //log out from current user
 export const logOutUser = async () => {
     await signOut(auth);
+}
+
+//Email verification
+export const EmailVerification = async (auth) => {
+    await sendEmailVerification(auth.currentUser);
+}
+
+//Pass reset
+export const PassReset = async (auth, email) => {
+    await sendPasswordResetEmail(auth, email);
 }
