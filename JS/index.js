@@ -32,6 +32,7 @@ logInForm.addEventListener("submit", (e) => {
 //Send Email Password reset
 const passResetButton = document.querySelector('.passResetButton');
 passResetButton.addEventListener('click', async () => {
+  if(!userNameElement.value.length) return;
   const user = await getUserObjectFromUserName(userNameElement.value);
   const email = user.email;
   PassReset(auth, email)

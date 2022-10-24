@@ -12,12 +12,20 @@
 </head>
 
 <body>
-  <!-- CompraBet logo format inside the site -->
+  <!-- CompraBet logo format inside the site + User Section -->
   <nav class="navbar bg-light opacity-75">
     <div class="container-fluid my-3">
       <a class="navbar-brand" href="./index.html"><img src="../Images/Logo/green/png/logo-no-background.png"
-          alt="compraBetsLogo" class="compraBetsLogo img-fluid" /></a>
-      <div class="userSection me-5">Hello user, bla bla</div>
+          alt="compraBetsLogo" class="compraBetsLogo" /></a>
+      <div class="userSection me-5 mt-2">
+        <span class="userWelcome">
+          Hello
+          <a href="./userPage.html" class="userNameHref text-success fw-bold"></a>
+          , Welcome back!
+        </span>
+        <input type="button" value="Log-Out"
+          class="logOutButton btn btn-sm btn-outline-dark fw-bold p-0 px-1 mb-1 border-0">
+      </div>
     </div>
   </nav>
 
@@ -74,7 +82,100 @@
     </div>
 
     <!-- my bets page -->
-    <div id="myBetsDiv" class="d-none"></div>
+    <div id="myBetsDiv" class="d-none">
+      <div class="example">
+
+
+        <div class="row d-flex justify-content-center align-items-center my-4">
+          <div class="col col-lg-10 mb-4 mb-lg-0">
+            <div class="card mb-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body p-4">
+                    <!-- information div -->
+                    
+                    <form>
+                      <h4>Day One <span class="text-muted fs-6 ms-1">11/22/1997</span></h4>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-2">
+                        <div class="col-6 mb-3">
+                          <h6 class="text-muted">Group A - Round 1 - 15:00</h6>
+                          <p class="userNameP my-2">
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                            <label class="fw-bold">Senegal</label>
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            :
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            <label class="fw-bold">Senegal</label>
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                          </p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6 class="text-muted">Group A - Round 1 - 15:00</h6>
+                          <p class="userNameP my-2">
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                            <label class="fw-bold">Senegal</label>
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            :
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            <label class="fw-bold">Senegal</label>
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                          </p>
+                        </div>
+                      </div>
+                      <input type="submit" class="mb-4" value="Send - Day One">
+                    </form>
+
+                    <form>
+                      <h4>Day One <span class="text-muted fs-6 ms-1">11/22/1997</span></h4>
+                      <hr class="mt-0 mb-4">
+                      <div class="row pt-2">
+                        <div class="col-6 mb-3">
+                          <h6 class="text-muted">Group A - Round 1 - 15:00</h6>
+                          <p class="userNameP my-2">
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                            <label class="fw-bold">Senegal</label>
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            :
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            <label class="fw-bold">Senegal</label>
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                          </p>
+                        </div>
+                        <div class="col-6 mb-3">
+                          <h6 class="text-muted">Group A - Round 1 - 15:00</h6>
+                          <p class="userNameP my-2">
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                            <label class="fw-bold">Senegal</label>
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            :
+                            <input type="number" id="quantity" min="0" max="10" style="width: 45px; height: 22px;" required>
+                            <label class="fw-bold">Senegal</label>
+                            <img src="https://crests.football-data.org/senegal.svg" alt="" class="mb-1"
+                              style="height: 20px; width: 40px;">
+                          </p>
+                        </div>
+                      </div>
+                      <input type="submit" class="mb-4" value="Send - Day One">
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
 
     <!-- my friends bets to watch -->
     <div id="friendsBetsDiv" class="d-none"></div>
@@ -86,7 +187,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="../JS/mainPage.js"></script>
+  <script src="../JS/mainPage.js" type="module"></script>
 </body>
 
 </html>
