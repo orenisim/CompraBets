@@ -34,7 +34,7 @@ import {
 export const auth = getAuth(app);
 
 
-//collection name
+//user Collection Ref
 const usersColRef = collection(db, 'users');
 
 //create user with auth and insert to DB with uniqe user name
@@ -94,4 +94,16 @@ export const EmailVerification = async (auth) => {
 //Pass reset
 export const PassReset = async (auth, email) => {
     await sendPasswordResetEmail(auth, email);
+}
+
+
+//matches collection Ref
+const matchesColRef = collection(db, 'matches');
+//get array of matches from DB-->Collection matches
+export const getMatchesFromDB = async (auth) => {
+    const data = await getDocs(matchesColRef);
+    const arrayOfData = data.docs;
+    let arrayOfMatches = [];
+    arrayOfData.forEach(matchData => arrayOfMatches.push(matchData.data()));
+    return arrayOfMatches;
 }

@@ -27,3 +27,13 @@ body {
   border-color: rgba(2, 94, 2, 0.774);
   border-width: 1.5px;
 }
+
+.flagIcon {
+  height: 30px;
+  width: 30px;
+}
+
+input[type="number"] {
+  height: 20px;
+  width: 40px;
+}
