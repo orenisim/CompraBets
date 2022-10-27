@@ -28,51 +28,47 @@ const getMatchesFromAPI = async () => {
   return data;
 };
 
-const addMatch = match => {
-  if (match.stage == 'GROUP_STAGE') {
-    const date = match.utcDate.split('T');
-    date[1] = date[1].substring(0, 8);
-    addDoc(matchesColRef, {
+const addMatch = async match => {
+  if (match.stage == "GROUP_STAGE") {
+    const fullDate = match.utcDate.split('T');
+    //date
+    let date = fullDate[0];
+    date = fullDate[0].split('-');
+    date = date[2] + '/' + date[1] + '/' + date[0];
+    //time
+    let time = fullDate[1].substring(0, 8);
+    time = fullDate[1].split(':');
+    time = (Number(time[0]) + 2) + ":" + time[1];
+    //group name
+    const groupName = (match.group).split('_');
+    match.group = groupName[0] + " " + groupName[1];
+    //group stage
+    const stage = (match.stage).split('_');
+    match.stage = stage[0] + " " + stage[1];
+    await addDoc(matchesColRef, {
       awayTeam: match.awayTeam.name,
-      date: date[0],
+      date: date,
       gameWeek: match.matchday,
       group: match.group,
       homeTeam: match.homeTeam.name,
       iconAwayTeamURL: match.awayTeam.crest,
       iconHomeTeamURL: match.homeTeam.crest,
       stage: match.stage,
-      time: date[1]
+      time: time
     })
   }
 }
 
 const updateMatches = async () => {
   const data = await getMatchesFromAPI();
-  data.matches.forEach(match => addMatch(match));
+  data.matches.forEach(async match => await addMatch(match));
 }
-
 
 updateMatches()
   .then(() => console.log('Done!'))
   .catch((err) => console.log(err));
 
-
-    // data.matches.forEach(match => {
-    //   if (match.group == 'GROUP_A') {
-    //     const date = match.utcDate.split('T');
-    //     date[1] = date[1].substring(0, 8);
-    //     console.log(`Day: #${match.matchday}, Stage: ${match.stage}, Group: ${match.group}`)
-    //     console.log(`Date: ${date[0]}, Time: ${date[1]}`);
-    //     console.log(`Home Team: ${match.homeTeam.name}`)
-    //     console.log(`Icon URL : ${match.homeTeam.crest}`);
-    //     console.log(`Away Team: ${match.awayTeam.name}`)
-    //     console.log(`Icon URL : ${match.awayTeam.crest}`);
-    //     console.log('///////////');
-    //   }
-    // });
-  // })
-
-
+  
 /*PLAN B= Run using outside server.
 
 fetch(
