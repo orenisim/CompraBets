@@ -91,3 +91,20 @@ body {
 .filtered {
   display: none !important;
 }
+
+/*footer copyright styles and positions*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 100px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  opacity: 70%;
+}

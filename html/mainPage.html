@@ -15,7 +15,7 @@
   <!-- CompraBet logo format inside the site + User Section -->
   <nav class="navbar bg-light opacity-75">
     <div class="container-fluid my-3">
-      <a class="navbar-brand" href="./index.html"><img src="../Images/Logo/green/png/logo-no-background.png"
+      <a class="navbar-brand" href="./mainPage.html"><img src="../Images/Logo/green/png/logo-no-background.png"
           alt="compraBetsLogo" class="compraBetsLogo" /></a>
       <div class="userSection me-5 mt-2">
         <span class="userWelcome">
@@ -79,60 +79,27 @@
 
     <!-- my bets page -->
     <div id="myBetsDiv" class="d-none">
-      <div class="example">
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col col-lg-10 mb-4 mb-lg-0">
+          <div class="card mb-3">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card-body p-4">
 
+                  <nav class="mb-4 mt-1">
+                    <ul class="buttonsPage-Item pagination justify-content-center">
+                    </ul>
+                  </nav>
 
-        <div class="row d-flex justify-content-center my-4">
-          <div class="col col-lg-10 mb-4 mb-lg-0">
-            <div class="card mb-3">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card-body p-4">
-
-                    <nav class="mb-4 mt-1">
-                      <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                          <button class="backwardbtn page-link p-2 px-4 border-0 rounded">&laquo;</button>
-                        </li>
-                        <li class="page-item"><button class="round1btn page-link p-2 active px-4 border-0 rounded">Round One</button></li>
-                        <li class="page-item"><button class="round2btn page-link p-2 px-4 border-0 rounded">Round Two</button></li>
-                        <li class="page-item"><button class="round3btn page-link p-2 px-4 border-0 rounded">Round Three</button></li>
-                        <li class="page-item"><button class="roundOf16btn page-link p-2 px-4 border-0 rounded d-none">Round Of 16</button></li>
-                        <li class="page-item">
-                          <button class="forwardbtn page-link p-2 px-4 border-0 rounded">&raquo;</button>
-                        </li>
-                      </ul>
-                    </nav>
-
-                    <form class="roundOneForm">
-                      <h3>Round One <span class="text-muted fs-6 ms-1">20/11 - 24/11</span></h3>
-                      <hr class="mt-0 mb-4">
-                    </form>
-
-                    <form class="roundTwoForm d-none">
-                      <h3>Round Two <span class="text-muted fs-6 ms-1">25/11 - 28/11</span></h3>
-                      <hr class="mt-0 mb-4">
-                    </form>
-
-                    <form class="roundThreeForm d-none">
-                      <h3>Round Three <span class="text-muted fs-6 ms-1">29/11 - 02/12</span></h3>
-                      <hr class="mt-0 mb-4">
-                    </form>
-
-                    <form class="round16Form d-none">
-                      <h3>Round 16 <span class="text-muted fs-6 ms-1">29/11 - 02/12</span></h3>
-                      <hr class="mt-0 mb-4">
-                    </form>
-
+                  <div class="formsPerDate">
                   </div>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
 
     <!-- my friends bets to watch -->
@@ -144,8 +111,8 @@
     </div>
   </div>
 
-  
-  
+
+
   <!-- JavaScript -->
   <script src="../JS/mainPage.js" type="module"></script>
 </body>

@@ -27,9 +27,25 @@ body {
   font-size: 19px;
 }
 
-
 /* center a button */
 #createNewLeagueButton {
   margin: auto;
   display: block;
+}
+
+/*footer copyright styles and positions*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 100px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  opacity: 70%;
 }

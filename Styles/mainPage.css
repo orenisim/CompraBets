@@ -37,3 +37,19 @@ input[type="number"] {
   height: 20px;
   width: 40px;
 }
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 100px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  opacity: 70%;
+}

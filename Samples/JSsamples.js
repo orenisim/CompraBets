@@ -7,8 +7,12 @@ import { onAuthStateChanged }
 const userNameHref = document.querySelector('.userNameHref');
 // Get user that already log in
 onAuthStateChanged(auth, (user) => {
+  if(user == null) {
+    window.location = "./index.html";
+  }
   userNameHref.textContent = user.displayName;
 });
+
 
 //log out from user
 const logOutButton = document.querySelector('.logOutButton');
