@@ -7,6 +7,9 @@ import { onAuthStateChanged }
 const userNameHref = document.querySelector('.userNameHref');
 // Get user that already log in
 onAuthStateChanged(auth, (user) => {
+  if(user == null) {
+    window.location = "./index.html";
+  }
   userNameHref.textContent = user.displayName;
 });
 
@@ -69,16 +72,74 @@ rulesLink.addEventListener("click", () => {
 
 //My Bets
 
+//create buttons nav
+const createButtonsPageItem = datesArray => {
+  const buttonsPageItemDiv = document.querySelector('.buttonsPage-Item');
+  buttonsPageItemDiv.innerHTML = `
+  <li class="page-item">
+    <button class="backwardbtn page-link p-2 px-4 border-0 rounded">&laquo;</button>
+  </li>`;
+  let counter = 0;
+  datesArray.forEach((date, index) => {
+    date = date.substring(0,5);
+    if (!counter) {
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${index+1} </button></li>`
+    } else if (counter < 3) {
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${index+1} </button></li>`
+    } else {
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${index+1} </button></li>`
+    }
+    counter++;
+  })
+  buttonsPageItemDiv.innerHTML += 
+  `<li class="page-item">
+    <button class="forwardbtn page-link p-2 px-4 border-0 rounded">&raquo;</button>
+  </li>`;
+  addEvenetListenersToButtons();
+}
+
+//create Form per date
+const createFormPerDate = datesArray => {
+  const arrayOfFormsPerDate = [];
+  const formsPerDate = document.querySelector('.formsPerDate');
+  datesArray.forEach((date, index) => {
+    formsPerDate.innerHTML += `
+    <form class="formNumber${index}">
+      <h3>Game Day ${index + 1} <span class="text-muted fs-6 ms-1">${date}</span></h3>
+      <hr class="mt-0 mb-4">
+    </form>`;
+    if (index) document.querySelector(`.formNumber${index}`).classList.add('d-none');
+  });
+}
+
+//get array of dates matches
+const getMatchesDatesArray = arrayOfMatches => {
+  const datesSet = new Set();
+  arrayOfMatches.forEach(match => {
+    datesSet.add(match.date);
+  })
+  let datesArray = Array.from(datesSet);
+  datesArray = datesArray.sort((a, b) => {
+    let arrayA = a.split('/');
+    let arrayB = b.split('/');
+    let sumA = Number(arrayA[0]) + Number(arrayA[1] * 30);
+    let sumB = Number(arrayB[0]) + Number(arrayB[1] * 30);
+    return sumA - sumB;
+  })
+
+  return datesArray;
+}
+
 //create matches elements
-const addMatchToForm = (form, match, firstORsecond) => {
+const addMatchToForm = (form, match, counter, index) => {
   //check if where to insert the match, first col or second col
-  const rowName = `round${match.gameWeek}rowNumber${Math.floor(firstORsecond / 2)}`
+  const rowName = `form${index}Row${Math.floor(counter / 2)}`;
   //if even first col, odd second col
-  if (!(firstORsecond % 2)) {
+  if (!(counter % 2)) {
     form.innerHTML += `
-    <div id="${rowName}" class="row pt-2">
+    <div id="${rowName}" class="row mt-3 mb-1">
      <div class="col-6 mb-4">
-      <h6 class="text-muted ms-1">${match.group} - ${match.date} - ${match.time}</h6>
+      <h6 class="text-muted">${match.group} - ${match.date} - ${match.time}</h6>
       <p class="my-2">
        <img src="${match.iconHomeTeamURL}" alt="flagIcon"
          class="mb-1 flagIcon">
@@ -96,7 +157,7 @@ const addMatchToForm = (form, match, firstORsecond) => {
     const row = document.querySelector(`#${rowName}`);
     row.innerHTML += `
     <div class="col-6 mb-4">
-     <h6 class="text-muted ms-1">${match.group} - ${match.date} - ${match.time}</h6>
+     <h6 class="text-muted">${match.group} - ${match.date} - ${match.time}</h6>
      <p class="my-2">
       <img src="${match.iconHomeTeamURL}" alt="flagIcon"
         class="mb-1 flagIcon">
@@ -112,80 +173,87 @@ const addMatchToForm = (form, match, firstORsecond) => {
   }
 }
 
-//query selectors to all buttons and forms of my bets
-const arrayOfRoundsForms = [
-  document.querySelector('.roundOneForm'),
-  document.querySelector('.roundTwoForm'),
-  document.querySelector('.roundThreeForm'),
-  document.querySelector('.round16Form')
-]
-const arrayOfRoundsButtons = [
-  document.querySelector('.round1btn'),
-  document.querySelector('.round2btn'),
-  document.querySelector('.round3btn'),
-  document.querySelector('.roundOf16btn')
-]
-const backButton = document.querySelector('.backwardbtn');
-const forwardButton = document.querySelector('.forwardbtn');
+//create Bet submit buttons
+const createBetButtons = numberOfdates => {
+  for (let i = 0; i < numberOfdates; i++) {
+    const form = document.querySelector(`.formNumber${i}`);
+    form.innerHTML += `<input type="submit" class="submitFormNumber${i} btn btn-primary mt-3 col-12 fw-bold" value="Bet">`;
+  }
+}
+
+//get matches form DataBase and create My Bets section
+let numberOfdates;
+getMatchesFromDB(auth).then(arrayOfMatches => {
+  const datesArray = getMatchesDatesArray(arrayOfMatches);
+  numberOfdates = datesArray.length;
+  createButtonsPageItem(datesArray);
+  createFormPerDate(datesArray);
+  //array of counters how many games per day/form
+  const arrayOfCountersPerRounds = new Array(numberOfdates).fill(0);
+  arrayOfMatches.forEach(match => {
+    const pos = datesArray.indexOf(match.date);
+    const form = document.querySelector(`.formNumber${pos}`);
+    addMatchToForm(form, match, arrayOfCountersPerRounds[pos], pos);
+    arrayOfCountersPerRounds[pos]++;
+  });
+  createBetButtons(numberOfdates);
+});
+
 
 //Defalut position
 let currentPosDisplay = 0;
 
-getMatchesFromDB(auth).then(arrayOfMatches => {
-  //array to know where to display the next game in col 1 or 2
-  const arrayOfCoundersPerRounds = [0, 0, 0, 0];
-  arrayOfMatches.forEach(match => {
-    if (match.gameWeek === 1) {
-      addMatchToForm(arrayOfRoundsForms[0], match, arrayOfCoundersPerRounds[0]);
-      arrayOfCoundersPerRounds[0]++;
-    } else if (match.gameWeek === 2) {
-      addMatchToForm(arrayOfRoundsForms[1], match, arrayOfCoundersPerRounds[1]);
-      arrayOfCoundersPerRounds[1]++;
-    } else if (match.gameWeek === 3) {
-      addMatchToForm(arrayOfRoundsForms[2], match, arrayOfCoundersPerRounds[2]);
-      arrayOfCoundersPerRounds[2]++;
-    }
-  });
-  arrayOfRoundsForms.forEach(form => {
-    form.innerHTML += `<input type="submit" class="btn btn-primary mt-3 col-12 fw-bold" value="Bet">`
-  })
-})
-
-//change display both form and button
+// change display both form and button
 const changeDisplayRound = newPosDisplay => {
   //change display buttons
-  arrayOfRoundsButtons[currentPosDisplay].classList.remove('active');
-  arrayOfRoundsButtons[newPosDisplay].classList.add('active');
+  const currentButton = document.querySelector(`.navBtn${currentPosDisplay}`);
+  const newButton = document.querySelector(`.navBtn${newPosDisplay}`);
+  currentButton.classList.remove('active');
+  newButton.classList.add('active');
   //change display Forms
-  arrayOfRoundsForms[currentPosDisplay].classList.add('d-none');
-  arrayOfRoundsForms[newPosDisplay].classList.remove('d-none');
+  const currentForm = document.querySelector(`.formNumber${currentPosDisplay}`);
+  const newForm = document.querySelector(`.formNumber${newPosDisplay}`);
+  currentForm.classList.add('d-none');
+  newForm.classList.remove('d-none');
   //moving foward or back to display new buttons
-  console.log(arrayOfRoundsButtons[newPosDisplay].classList.contains('d-none'));
-  if (newPosDisplay > 2) {
-    arrayOfRoundsButtons[newPosDisplay - 3].classList.add('d-none');
-    arrayOfRoundsButtons[newPosDisplay].classList.remove('d-none');
-  } else if (arrayOfRoundsButtons[newPosDisplay].classList.contains('d-none')) {
-    arrayOfRoundsButtons[newPosDisplay + 3].classList.add('d-none');
-    arrayOfRoundsButtons[newPosDisplay].classList.remove('d-none');
+  if(newPosDisplay > currentPosDisplay && newPosDisplay > 2) {
+    if(newButton.classList.contains('d-none')) {
+      newButton.classList.remove('d-none');
+      const displayNoneButton = document.querySelector(`.navBtn${newPosDisplay - 3}`);
+      displayNoneButton.classList.add('d-none');
+    }
+  } else if(newPosDisplay < currentPosDisplay && newPosDisplay < numberOfdates - 2) {
+    if(newButton.classList.contains('d-none')) {
+      newButton.classList.remove('d-none');
+      const displayNoneButton = document.querySelector(`.navBtn${newPosDisplay + 3}`);
+      displayNoneButton.classList.add('d-none');
+    }
   }
+
   //change pointer to current form and button
   currentPosDisplay = newPosDisplay;
 }
 
-//nav
 //event listeners to all the nav buttons + back and foward buttons
-for (let i = 0; i < arrayOfRoundsButtons.length; i++) {
-  arrayOfRoundsButtons[i].addEventListener('click', () => {
-    changeDisplayRound(i);
-  });
+const addEvenetListenersToButtons = () => {
+  for (let i = 0; i < numberOfdates; i++) {
+    const button = document.querySelector(`.navBtn${i}`);
+    button.addEventListener('click', () => {
+      changeDisplayRound(i);
+    });
+  }
+
+  //foward and backward buttons
+  const backButton = document.querySelector('.backwardbtn');
+  const forwardButton = document.querySelector('.forwardbtn');
+  backButton.addEventListener('click', () => {
+    if (!currentPosDisplay) return;
+    changeDisplayRound(currentPosDisplay - 1);
+  })
+  forwardButton.addEventListener('click', () => {
+    if (currentPosDisplay === numberOfdates - 1) return;
+    changeDisplayRound(currentPosDisplay + 1);
+  })
 }
-backButton.addEventListener('click', () => {
-  if (!currentPosDisplay) return;
-  changeDisplayRound(currentPosDisplay - 1);
-})
-forwardButton.addEventListener('click', () => {
-  if (currentPosDisplay === arrayOfRoundsForms.length - 1) return;
-  changeDisplayRound(currentPosDisplay + 1);
-})
 
 //End of My Bets

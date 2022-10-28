@@ -6,6 +6,9 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/fi
 const userNameHref = document.querySelector(".userNameHref");
 // Get user that already log in
 onAuthStateChanged(auth, (user) => {
+  if(user == null) {
+    window.location = "./index.html";
+  }
   userNameHref.textContent = user.displayName;
 });
 
