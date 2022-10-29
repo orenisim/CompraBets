@@ -1,4 +1,4 @@
-import { auth, createUser, EmailVerification, } from "./usersFirebase.js";
+import { auth, createUser, EmailVerification, } from "./Firebase/usersFirebase.js";
 
 const signInForm = document.querySelector('.registerForm');
 const firstNameElement = signInForm.registerFirstName;

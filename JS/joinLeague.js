@@ -1,5 +1,6 @@
 //Header JavaScript
-import { auth, logOutUser, addLeague, getLeagues } from "./usersFireBase.js";
+import { auth, logOutUser, getUserObjectFromUserName, updateLeagueInUserCollection } from "./Firebase/usersFirebase.js";
+import { addLeague, getLeagues } from "./Firebase/leaguesFirebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 
 // Get user that already log in
@@ -7,6 +8,12 @@ onAuthStateChanged(auth, (user) => {
   if (user == null) {
     window.location = "./index.html";
   }
+  const userObject = getUserObjectFromUserName(user.displayName)
+    .then(userObject => {
+      if (userObject.league) {
+        window.location = "./mainPage.html"
+      }
+    }).catch(err => console.log(err));
   userNameHref.textContent = user.displayName;
 });
 
@@ -80,16 +87,20 @@ const leagueName = document.querySelector("#leagueName");
 const password = document.querySelector("#password");
 const submitButton = document.querySelector("#submitButton");
 
-submitButton.addEventListener("click", () => {
+submitButton.addEventListener("click", e => {
+  e.preventDefault();
   const league = {
-    name: leagueName.value,
+    name: leagueName.value.toLowerCase(),
     password: password.value,
   };
   addLeague(league)
-    .then((e) =>
-      alert(`your league has created and your League ID is: ${e.id}`)
-    )
-    .catch((err) => console.log(err));
+    .then(() => {
+      updateLeagueInUserCollection(userNameHref.textContent, league.name)
+        .then(() => {
+          alert('DB Update');
+          window.location = "./mainPage.html";
+        });
+    }).catch(err => console.log(err));
 });
 
 getLeagues()

@@ -1,5 +1,5 @@
 //Header JavaScript
-import { auth, logOutUser, getMatchesFromDB } from "./usersFireBase.js";
+import { auth, logOutUser, getMatchesFromDB } from "./Firebase/usersFirebase.js";
 import { onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js';
 

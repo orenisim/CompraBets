@@ -1,4 +1,4 @@
-import { auth, logInUser, PassReset, getUserObjectFromUserName } from "./usersFireBase.js";
+import { auth, logInUser, PassReset, getUserObjectFromUserName } from "./Firebase/usersFirebase.js";
 
 const logInForm = document.querySelector(".logInForm");
 const userNameElement = logInForm.logInUserName;
@@ -10,7 +10,7 @@ const errmsg = document.querySelector('.errmsg');
 logInForm.addEventListener("submit", (e) => {
   e.preventDefault();
   logInUser(userNameElement.value, passElement.value)
-    .then(() => {
+    .then((userObject) => {
       logInForm.classList.add("was-validated");
       errmsg.textContent = '';
 
@@ -18,7 +18,9 @@ logInForm.addEventListener("submit", (e) => {
       alert('Log in');
 
       logInForm.reset();
-      window.location = "./joinLeague.html";
+
+      if (userObject.league) window.location = "./mainPage.html";
+      else window.location = "./joinLeague.html";
     })
     .catch(err => {
       if (err.message == 'Firebase: Error (auth/wrong-password).') {
@@ -32,7 +34,7 @@ logInForm.addEventListener("submit", (e) => {
 //Send Email Password reset
 const passResetButton = document.querySelector('.passResetButton');
 passResetButton.addEventListener('click', async () => {
-  if(!userNameElement.value.length) return;
+  if (!userNameElement.value.length) return;
   const user = await getUserObjectFromUserName(userNameElement.value);
   const email = user.email;
   PassReset(auth, email)
