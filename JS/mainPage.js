@@ -1,14 +1,26 @@
 //Header JavaScript
-import { auth, logOutUser, getMatchesFromDB } from "./Firebase/usersFirebase.js";
+import {
+  auth, logOutUser, getMatchesFromDB,
+  getUserObjectFromUserName
+} from "./Firebase/usersFirebase.js";
+import { getLeagueInfo } from "./Firebase/leaguesFirebase.js";
 import { onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js';
 
 //change the deafult user name + get object
 const userNameHref = document.querySelector('.userNameHref');
 // Get user that already log in
-onAuthStateChanged(auth, (user) => {
-  if(user == null) {
+onAuthStateChanged(auth, async (user) => {
+  if (user == null) {
     window.location = "./index.html";
+  }
+  const userObject = await getUserObjectFromUserName(user.displayName)
+  if (!userObject.league) {
+    window.location = "./joinLeague.html";
+  }
+  if (userObject.league) {
+    const leagueObject = await getLeagueInfo(userObject.league);
+    updateMyLeague(leagueObject);
   }
   userNameHref.textContent = user.displayName;
 });
@@ -22,7 +34,7 @@ logOutButton.addEventListener('click', () => {
   })
 });
 
-//My League
+//Start Of Nav
 
 // the indicators to the nav buttons in the top of the page
 
@@ -67,7 +79,21 @@ rulesLink.addEventListener("click", () => {
   changeDisplay(rulesLink, rulesDiv);
 });
 
+//End of Nav
+
+
+//My League
+
+const updateMyLeague = leagueObject => {
+  const leageNameSpan = document.querySelector('#leageNameSpan');
+  leageNameSpan.textContent = leagueObject.name;
+  const numOfPlayersSpan = document.querySelector('#numOfPlayersSpan');
+  numOfPlayersSpan.textContent = leagueObject.numOfPlayers;
+}
+
+
 //End of My League
+
 
 
 //My Bets
@@ -81,18 +107,18 @@ const createButtonsPageItem = datesArray => {
   </li>`;
   let counter = 0;
   datesArray.forEach((date, index) => {
-    date = date.substring(0,5);
+    date = date.substring(0, 5);
     if (!counter) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${index+1} </button></li>`
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${index + 1} </button></li>`
     } else if (counter < 3) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${index+1} </button></li>`
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${index + 1} </button></li>`
     } else {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${index+1} </button></li>`
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${index + 1} </button></li>`
     }
     counter++;
   })
-  buttonsPageItemDiv.innerHTML += 
-  `<li class="page-item">
+  buttonsPageItemDiv.innerHTML +=
+    `<li class="page-item">
     <button class="forwardbtn page-link p-2 px-4 border-0 rounded">&raquo;</button>
   </li>`;
   addEvenetListenersToButtons();
@@ -216,14 +242,14 @@ const changeDisplayRound = newPosDisplay => {
   currentForm.classList.add('d-none');
   newForm.classList.remove('d-none');
   //moving foward or back to display new buttons
-  if(newPosDisplay > currentPosDisplay && newPosDisplay > 2) {
-    if(newButton.classList.contains('d-none')) {
+  if (newPosDisplay > currentPosDisplay && newPosDisplay > 2) {
+    if (newButton.classList.contains('d-none')) {
       newButton.classList.remove('d-none');
       const displayNoneButton = document.querySelector(`.navBtn${newPosDisplay - 3}`);
       displayNoneButton.classList.add('d-none');
     }
-  } else if(newPosDisplay < currentPosDisplay && newPosDisplay < numberOfdates - 2) {
-    if(newButton.classList.contains('d-none')) {
+  } else if (newPosDisplay < currentPosDisplay && newPosDisplay < numberOfdates - 2) {
+    if (newButton.classList.contains('d-none')) {
       newButton.classList.remove('d-none');
       const displayNoneButton = document.querySelector(`.navBtn${newPosDisplay + 3}`);
       displayNoneButton.classList.add('d-none');
