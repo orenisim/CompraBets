@@ -74,11 +74,23 @@ export const createUser = async (
         email,
         firstName,
         lastName,
-        league: "",
+        league: ""
       });
+      await addBetsCollection(userName);
     }
   }
 };
+
+//add bets collection to users collection
+const addBetsCollection = async (userName) => {
+  const userObject = await getUserObjectFromUserName(userName);
+  const userID = userObject.id;
+  const userBetsColRef = collection(db, `users/${userID}/Bets`);
+  await addDoc(userBetsColRef, {
+    //set here default
+    
+  });
+}
 
 //log in into Auth with display name
 export const getUserObjectFromUserName = async (userName) => {
@@ -93,6 +105,8 @@ export const getUserObjectFromUserName = async (userName) => {
   if (!user) throw TypeError("Wrong User Name");
   return user;
 };
+
+//log in to current user
 export const logInUser = async (userName, pass) => {
   const user = await getUserObjectFromUserName(userName);
   await signInWithEmailAndPassword(auth, user.email, pass);

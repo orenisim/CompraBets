@@ -90,6 +90,7 @@ signInForm.addEventListener('submit', e => {
     e.preventDefault();
     const errmsg = document.querySelector('.errmsg');
     if (firstNameCheck() && lastNameCheck() && userNameCheck() && emailCheck() && passCheck()) {
+        addSpinnerLoading();
         createUser(firstNameElement.value, lastNameElement.value, userNameElement.value,
             emailElement.value, passElement.value)
             .then(() => {
@@ -97,10 +98,6 @@ signInForm.addEventListener('submit', e => {
                 signInForm.reset();
                 //Send Email Verification
                 EmailVerification(auth);
-
-                //just fot test!! 
-                alert('Done!');
-
                 window.location = "./joinLeague.html";
             })
             .catch(err => {
@@ -109,5 +106,9 @@ signInForm.addEventListener('submit', e => {
     }
 })
 
-
+//add spinner loading
+const addSpinnerLoading = () => {
+    const spinnerElement = document.querySelector('.spinner');
+    spinnerElement.classList.remove('d-none');
+}
 
