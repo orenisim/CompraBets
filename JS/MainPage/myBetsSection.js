@@ -37,7 +37,7 @@ const createFormPerDate = datesArray => {
   const formsPerDate = document.querySelector('.formsPerDate');
   datesArray.forEach((date, index) => {
     formsPerDate.innerHTML += `
-    <form class="formNumber${index}">
+    <form class="formNumber${index} date_${date}">
       <h3>Game Day ${index + 1} <span class="text-muted fs-6 ms-1">${date}</span></h3>
       <hr class="mt-0 mb-4">
     </form>`;
@@ -118,8 +118,12 @@ const createBetButtons = numberOfdates => {
 let numberOfdates;
 //number of games per day
 let arrayOfCountersPerDay;
+//array of dates
+let datesArray;
+
+//get matches from db and update web
 getMatchesFromDB(auth).then(arrayOfMatches => {
-  const datesArray = getMatchesDatesArray(arrayOfMatches);
+  datesArray = getMatchesDatesArray(arrayOfMatches);
   numberOfdates = datesArray.length;
   createButtonsPageItem(datesArray);
   createFormPerDate(datesArray);
@@ -133,6 +137,7 @@ getMatchesFromDB(auth).then(arrayOfMatches => {
   });
   createBetButtons(numberOfdates);
   addEvenetListenersToForms();
+  updateDependOnDate();
 });
 
 
@@ -209,7 +214,7 @@ const addEvenetListenersToForms = () => {
         const awayTeamName = document.querySelector(`.${nameOfForm} .gameNumber${j} .awayTeamName`).textContent;
         const winner = getWinner(homeTeamScore, homeTeamName, awayTeamName, awayTeamScore);
         const finalScore = homeTeamScore + ':' + awayTeamScore;
-        const betDetailsObject = {api_ID, finalScore, winner};
+        const betDetailsObject = { api_ID, finalScore, winner };
         addBetPerMatch(userNameHref.textContent, betDetailsObject)
           .catch(err => console.log(err));
       }
@@ -223,5 +228,83 @@ const getWinner = (homeTeamScore, homeTeamName, awayTeamName, awayTeamScore) => 
   else if (homeTeamScore < awayTeamScore) return awayTeamName;
   else return "Tie"; //maybe needs to change depand on the API
 }
+
+//get current Time and Date Israel Time Zone
+const getCurrentTime = () => {
+  let fullDate = new Date().toLocaleString("en-US", { timeZone: "Israel" });
+  fullDate = fullDate.split(', ');
+  const day = fullDate[0].split('/')[1];
+  const month = fullDate[0].split('/')[0];
+  const year = fullDate[0].split('/')[2];
+
+  let hour = fullDate[1].split(':')[0];
+  if (fullDate[1].split(':')[2].includes('PM')) hour = Number(hour) + 12;
+  const minute = fullDate[1].split(':')[1];
+
+  return {
+    date: {
+      day: Number(day),
+      month: Number(month),
+      year: Number(year),
+    },
+    time: {
+      hour: Number(hour),
+      minute: Number(minute)
+    }
+  }
+}
+
+// calculate sum of Hours form full date
+const calculatorSumOfHours = dateAndTimeObject => {
+  const sum = dateAndTimeObject.date.year * 8760 +
+    dateAndTimeObject.date.month * 730.5 +
+    dateAndTimeObject.date.day * 24 +
+    dateAndTimeObject.time.hour +
+    (dateAndTimeObject.time.minute / 60)
+  return sum;
+}
+
+//check if the bet date is over
+const updateDependOnDate = () => {
+  const dateAndTimeObj = getCurrentTime();
+  for (let i = 0; i < numberOfdates; i++) {
+    const arrayOfDate = datesArray[i].split('/');
+    
+    //create time and date object
+    const formDateAndTimeObject = {
+      date: {
+        day: arrayOfDate[0],
+        month: arrayOfDate[1],
+        year: arrayOfDate[2]
+      },
+      time: {
+        hour: 12,
+        minute: 0
+      }
+    }
+
+    const currentSumOfHours = calculatorSumOfHours(dateAndTimeObj);
+    const formSumOfHours = calculatorSumOfHours(formDateAndTimeObject);
+    //if current date and time is higher then form date and time disabled the form
+    const form = document.querySelector(`.formNumber${i}`);
+    if (currentSumOfHours > formSumOfHours) {
+      if (i != numberOfdates - 1) {
+        changeDisplayRound(currentPosDisplay + 1);
+      }
+      const button = document.querySelector(`.navBtn${i}`);
+      button.classList.add('disabled');
+      form.innerHTML = `
+          <h3>Game Day ${i + 1} <span class="text-muted fs-6 ms-1">${datesArray[i]}</span></h3>
+          <hr class="mt-0 mb-4">
+          <h1 class="text-muted">Bet Over!</h1>`;
+    } else {
+      form.innerHTML += `<h6 class="text-center text-muted mb-0 pb-0">${Math.floor((formSumOfHours - currentSumOfHours) / 24)} day, 
+        ${Math.floor((formSumOfHours - currentSumOfHours) % 24)} Hours and 
+        ${Math.floor((formSumOfHours - currentSumOfHours) * 60 % 60)} Minutes
+        until end of bet!</h6>`
+    }
+  }
+}
+
 
 //End of My Bets
