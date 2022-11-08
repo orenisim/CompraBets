@@ -79,14 +79,21 @@ export const updateScore = async () => {
     console.log(arrayOfUserBets);
     arrayOfUserBets.forEach(async (bet) => {
       const api_ID = bet.api_ID;
-      //needs to check only in case to ignore of empty documents
+      //needs to check only in case to ignore of empty documents --> inside the if is only tests right now...
       if (api_ID) {
-        await checkingScore(api_ID, userID).then((data) => console.log(data));
+        await checkingScore(api_ID, userID).then((data) =>
+          console.log(`checkingScoreResult: ${data}`)
+        );
+        await getCurrentScore(userID).then((data) =>
+          console.log(`getCurrentScoreResult: ${data}`)
+        );
       }
 
-      // await updateDoc(userColRef, {
-      //   score: (await getCurrentScore(userID)) + (await checkingScore(api_ID)),
-      // });
+      await updateDoc(userColRef, {
+        score:
+          (await getCurrentScore(userID)) +
+          (await checkingScore(api_ID, userID)),
+      });
     });
   });
 };
