@@ -37,7 +37,8 @@ const getGameWinnerByID = async (apiID) => {
 };
 
 //getting the user game bet by id:
-const getBetScoreByID = async (apiID) => {
+const getBetScoreByID = async (apiID, userID) => {
+  const betsColRef = collection(db, `users/${userID}/Bets`);
   const q = query(betsColRef, where("api_ID", "==", apiID));
   const data = await getDocs(q);
   let matchObject;
@@ -46,7 +47,8 @@ const getBetScoreByID = async (apiID) => {
 };
 
 //getting the user winnig team by id:
-const getBetWinnerByID = async (apiID) => {
+const getBetWinnerByID = async (apiID, userID) => {
+  const betsColRef = collection(db, `users/${userID}/Bets`);
   const q = query(betsColRef, where("api_ID", "==", apiID));
   const data = await getDocs(q);
   let matchObject;
@@ -55,11 +57,11 @@ const getBetWinnerByID = async (apiID) => {
 };
 
 //checking the score and return the amount of points that the user earned.
-export const checkingScore = async (apiID) => {
+export const checkingScore = async (apiID, userID) => {
   const reallScore = await getGameScoreByID(apiID);
-  const betScore = await getBetScoreByID(apiID);
+  const betScore = await getBetScoreByID(apiID, userID);
   const reallWinner = await getGameWinnerByID(apiID);
-  const betWiner = await getBetWinnerByID(apiID);
+  const betWiner = await getBetWinnerByID(apiID, userID);
   //super score = 10
   if (reallScore == betScore) return 10;
   //regular score = 5
@@ -77,9 +79,14 @@ export const updateScore = async () => {
     console.log(arrayOfUserBets);
     arrayOfUserBets.forEach(async (bet) => {
       const api_ID = bet.api_ID;
-      await updateDoc(userColRef, {
-        score: (await getCurrentScore(userID)) + (await checkingScore(api_ID)),
-      });
+      //needs to check only in case to ignore of empty documents
+      if (api_ID) {
+        await checkingScore(api_ID, userID).then((data) => console.log(data));
+      }
+
+      // await updateDoc(userColRef, {
+      //   score: (await getCurrentScore(userID)) + (await checkingScore(api_ID)),
+      // });
     });
   });
 };
