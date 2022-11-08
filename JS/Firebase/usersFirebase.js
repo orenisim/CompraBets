@@ -17,13 +17,13 @@ import {
   getDocs, //init
   addDoc, //add
   query,
-  where, //QUERIES
+  where,
+  getDoc, //QUERIES
   orderBy,
   serverTimestamp,
-  getDoc,
   updateDoc,
   getCountFromServer,
-  doc
+  doc,
 } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 export const db = getFirestore();
 
@@ -74,7 +74,8 @@ export const createUser = async (
         email,
         firstName,
         lastName,
-        league: ""
+        league: "",
+        score: 0,
       });
       await addBetsCollection(userName);
     }
@@ -88,9 +89,15 @@ const addBetsCollection = async (userName) => {
   const userBetsColRef = collection(db, `users/${userID}/Bets`);
   await addDoc(userBetsColRef, {
     //set here default
-    
   });
-}
+};
+//getting array of users ID
+export const getArrayOfIDfromUsers = async () => {
+  const docSnap = await getDocs(usersColRef);
+  let arrayOfID = [];
+  docSnap.forEach((doc) => arrayOfID.push(doc.id));
+  return arrayOfID;
+};
 
 //log in into Auth with display name
 export const getUserObjectFromUserName = async (userName) => {
@@ -101,7 +108,7 @@ export const getUserObjectFromUserName = async (userName) => {
   const docs = await getDocs(q);
   let user;
   //only one elementuser = ...doc.data(), id: doc.id
-  docs.forEach((doc) => user = { ...doc.data(), id: doc.id });
+  docs.forEach((doc) => (user = { ...doc.data(), id: doc.id }));
   if (!user) throw TypeError("Wrong User Name");
   return user;
 };
@@ -132,11 +139,11 @@ export const PassReset = async (auth, email) => {
 export const updateLeagueInUserCollection = async (userName, leagueName) => {
   const userObj = await getUserObjectFromUserName(userName);
   const userID = userObj.id;
-  const docRef = await doc(db, 'users', userID);
+  const docRef = await doc(db, "users", userID);
   await updateDoc(docRef, {
-    league: leagueName
+    league: leagueName,
   });
-}
+};
 
 //matches collection Ref
 const matchesColRef = collection(db, "matches");
@@ -149,4 +156,9 @@ export const getMatchesFromDB = async (auth) => {
   return arrayOfMatches;
 };
 
-
+//getting the current score from the user
+export const getCurrentScore = async (userID) => {
+  const docRef = await doc(db, "users", userID);
+  const docData = await getDoc(docRef);
+  return docData.data().score;
+};
