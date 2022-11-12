@@ -13,6 +13,7 @@ import {
   updateDoc,
   getCountFromServer,
   doc,
+  onSnapshot,
 } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 
 const usersColRef = collection(db, "users");
@@ -62,6 +63,7 @@ export const checkingScore = async (apiID, userID) => {
   const betScore = await getBetScoreByID(apiID, userID);
   const reallWinner = await getGameWinnerByID(apiID);
   const betWiner = await getBetWinnerByID(apiID, userID);
+
   //super score = 10
   if (reallScore == betScore) return 10;
   //regular score = 5
@@ -74,27 +76,20 @@ export const checkingScore = async (apiID, userID) => {
 export const updateScore = async () => {
   const arrayOfUsersID = await getArrayOfIDfromUsers();
   arrayOfUsersID.forEach(async (userID) => {
+    let betEarnPoints = await getCurrentScore(userID);
+    console.log(betEarnPoints);
     const userColRef = await doc(db, "users", userID);
     const arrayOfUserBets = await getArrayOfBets(userID);
-    console.log(arrayOfUserBets);
     arrayOfUserBets.forEach(async (bet) => {
       const api_ID = bet.api_ID;
       //needs to check only in case to ignore of empty documents --> inside the if is only tests right now...
-      if (api_ID) {
-        await checkingScore(api_ID, userID).then((data) =>
-          console.log(`checkingScoreResult: ${data}`)
-        );
-        await getCurrentScore(userID).then((data) =>
-          console.log(`getCurrentScoreResult: ${data}`)
-        );
-      }
-
-      await updateDoc(userColRef, {
-        score:
-          (await getCurrentScore(userID)) +
-          (await checkingScore(api_ID, userID)),
-      });
+      betEarnPoints += await checkingScore(api_ID, userID);
     });
+    console.log(`user ${userID} earned: ${betEarnPoints}`);
+    await updateDoc(userColRef, {
+      score: betEarnPoints,
+    });
+    return betEarnPoints;
   });
 };
 
