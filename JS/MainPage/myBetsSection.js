@@ -16,17 +16,14 @@ const createButtonsPageItem = (datesArray) => {
   datesArray.forEach((date, index) => {
     date = date.substring(0, 5);
     if (!counter) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${
-        index + 1
-      } </button></li>`;
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${index + 1
+        } </button></li>`;
     } else if (counter < 3) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${
-        index + 1
-      } </button></li>`;
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${index + 1
+        } </button></li>`;
     } else {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${
-        index + 1
-      } </button></li>`;
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${index + 1
+        } </button></li>`;
     }
     counter++;
   });
@@ -43,8 +40,7 @@ const createFormPerDate = (datesArray) => {
   datesArray.forEach((date, index) => {
     formsPerDate.innerHTML += `
     <form class="formNumber${index} date_${date}">
-      <h3>Game Day ${
-        index + 1
+      <h3>Game Day ${index + 1
       } <span class="text-muted fs-6 ms-1">${date}</span></h3>
       <hr class="mt-0 mb-4">
     </form>`;
@@ -330,9 +326,8 @@ const updateDependOnDate = () => {
       const button = document.querySelector(`.navBtn${i}`);
       button.classList.add("disabled");
       form.innerHTML = `
-          <h3>Game Day ${i + 1} <span class="text-muted fs-6 ms-1">${
-        datesArray[i]
-      }</span></h3>
+          <h3>Game Day ${i + 1} <span class="text-muted fs-6 ms-1">${datesArray[i]
+        }</span></h3>
           <hr class="mt-0 mb-4">
           <h1 class="text-muted">Bet Over!</h1>`;
     } else {

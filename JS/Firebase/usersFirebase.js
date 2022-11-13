@@ -156,9 +156,3 @@ export const getMatchesFromDB = async (auth) => {
   return arrayOfMatches;
 };
 
-//getting the current score from the user
-export const getCurrentScore = async (userID) => {
-  const docRef = await doc(db, "users", userID);
-  const docData = await getDoc(docRef);
-  return docData.data().score;
-};
