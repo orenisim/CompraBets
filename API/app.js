@@ -54,7 +54,10 @@ const addMatch = async match => {
       iconAwayTeamURL: match.awayTeam.crest,
       iconHomeTeamURL: match.homeTeam.crest,
       stage: match.stage,
-      time: time
+      time: time,
+      winner: match.score.winner,
+      finalScore: match.score.fullTime.home + ':' + match.score.fullTime.away,
+      api_ID: match.id
     })
   }
 }
@@ -63,6 +66,7 @@ const updateMatches = async () => {
   const data = await getMatchesFromAPI();
   data.matches.forEach(async match => await addMatch(match));
 }
+
 
 updateMatches()
   .then(() => console.log('Done!'))

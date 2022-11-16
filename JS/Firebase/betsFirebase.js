@@ -46,3 +46,12 @@ export const getArrayOfBets = async (userID) => {
   docSnap.forEach((doc) => arrayOfBets.push({ ...doc.data(), id: doc.id }));
   return arrayOfBets;
 };
+
+//return array of all teams include in the competition
+export const getArrayOfTeams = async () => {
+  const set = new Set();
+  const matchesColRef = collection(db, `matches`);
+  const docSnap = await getDocs(matchesColRef);
+  docSnap.forEach(doc => set.add(doc.data().homeTeam));
+  return Array.from(set);
+}

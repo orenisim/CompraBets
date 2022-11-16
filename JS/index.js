@@ -13,12 +13,7 @@ logInForm.addEventListener("submit", (e) => {
     .then((userObject) => {
       logInForm.classList.add("was-validated");
       errmsg.textContent = '';
-
-      //just fot test!! 
-      alert('Log in');
-
       logInForm.reset();
-
       if (userObject.league) window.location = "./mainPage.html";
       else window.location = "./joinLeague.html";
     })
