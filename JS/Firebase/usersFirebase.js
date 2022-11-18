@@ -88,8 +88,8 @@ const addBetsCollection = async (userName) => {
   const userID = userObject.id;
   const userBetsColRef = collection(db, `users/${userID}/Bets`);
   await addDoc(userBetsColRef, {
-    winner: "",
-    secondPlace: "" 
+    api_ID: 'OpeningBet',
+    winner: ""
   });
 };
 //getting array of users ID

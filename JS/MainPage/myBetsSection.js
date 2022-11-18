@@ -1,6 +1,6 @@
 //Header JavaScript
 import { auth, getMatchesFromDB } from "../Firebase/usersFirebase.js";
-import { addBetPerMatch } from "../Firebase/betsFirebase.js";
+import { addBetPerMatch, getArrayOfTeams, addOpeningBet } from "../Firebase/betsFirebase.js";
 import { userNameHref } from "./general.js";
 
 //My Bets
@@ -13,17 +13,18 @@ const createButtonsPageItem = (datesArray) => {
     <button class="backwardbtn page-link p-2 px-4 border-0 rounded">&laquo;</button>
   </li>`;
   let counter = 0;
+
+  //for the opening bet
+  buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn0 page-link p-2 active px-4 border-0 rounded"> 
+  Opening Bet</button></li>`
+
   datesArray.forEach((date, index) => {
     date = date.substring(0, 5);
-    if (!counter) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 active px-4 border-0 rounded"> Day ${index + 1
-        } </button></li>`;
-    } else if (counter < 3) {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded"> Day ${index + 1
+    if (counter < 2) {
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index + 1} page-link p-2 px-4 border-0 rounded"> Day ${index + 1
         } </button></li>`;
     } else {
-      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index} page-link p-2 px-4 border-0 rounded d-none"> Day ${index + 1
-        } </button></li>`;
+      buttonsPageItemDiv.innerHTML += `<li class="page-item"><button class="navBtn${index + 1} page-link p-2 px-4 border-0 rounded d-none"> Day ${index + 1} </button></li>`;
     }
     counter++;
   });
@@ -35,19 +36,46 @@ const createButtonsPageItem = (datesArray) => {
 
 //create Form per date
 const createFormPerDate = (datesArray) => {
-  const arrayOfFormsPerDate = [];
   const formsPerDate = document.querySelector(".formsPerDate");
-  datesArray.forEach((date, index) => {
+
+  //for the opening bet
+  createOpeningBet(formsPerDate);
+
+  for (let i = 1; i < datesArray.length + 1; i++) {
+    let date = datesArray[i - 1];
     formsPerDate.innerHTML += `
-    <form class="formNumber${index} date_${date}">
-      <h3>Game Day ${index + 1
-      } <span class="text-muted fs-6 ms-1">${date}</span></h3>
+    <form class="formNumber${i} date_${date} d-none">
+      <h3>Game Day ${i}
+       <span class="text-muted fs-6 ms-1">${date}</span></h3>
       <hr class="mt-0 mb-4">
     </form>`;
-    if (index)
-      document.querySelector(`.formNumber${index}`).classList.add("d-none");
-  });
+  }
+
 };
+
+//add opening bet Form to dad form
+const createOpeningBet = (form) => {
+  form.innerHTML += `
+  <form class="formNumber0">
+  <h3>World Cup 2022 Winner</h3>
+  <hr class="mt-0 mb-4">
+  <select class="form-select mt-2 mb-5" size="4" aria-label="Winner select">
+  </select>
+  </form>`;
+  getArrayOfTeams().
+    then(arrayOfTeams => {
+      const selectWinner = document.querySelector('.form-select');
+      arrayOfTeams.forEach((team, index) => {
+        if (!index) {
+          selectWinner.innerHTML += `<option selected value="${team}">${team}</option>`;
+        } else selectWinner.innerHTML += `<option value="${team}">${team}</option>`
+      });
+
+
+    })
+    .catch(err => console.log(err));
+}
+
 
 //get array of dates matches
 const getMatchesDatesArray = (arrayOfMatches) => {
@@ -112,7 +140,7 @@ const addMatchToForm = (form, match, counter, index) => {
 
 //create Bet submit buttons
 const createBetButtons = (numberOfdates) => {
-  for (let i = 0; i < numberOfdates; i++) {
+  for (let i = 0; i < numberOfdates + 1; i++) {
     const form = document.querySelector(`.formNumber${i}`);
     form.innerHTML += `<input type="submit" id="submitFormNumber${i}" class="btn btn-primary mt-3 col-12 fw-bold" value="Bet">`;
   }
@@ -132,9 +160,9 @@ getMatchesFromDB(auth).then((arrayOfMatches) => {
   createButtonsPageItem(datesArray);
   createFormPerDate(datesArray);
   //array of counters how many games per day/form
-  arrayOfCountersPerDay = new Array(numberOfdates).fill(0);
+  arrayOfCountersPerDay = new Array(numberOfdates + 1).fill(0);
   arrayOfMatches.forEach((match) => {
-    const pos = datesArray.indexOf(match.date);
+    const pos = datesArray.indexOf(match.date) + 1;
     const form = document.querySelector(`.formNumber${pos}`);
     addMatchToForm(form, match, arrayOfCountersPerDay[pos], pos);
     arrayOfCountersPerDay[pos]++;
@@ -187,7 +215,7 @@ const changeDisplayRound = (newPosDisplay) => {
 
 //event listeners to all the nav buttons + back and foward buttons
 const addEvenetListenersToButtons = () => {
-  for (let i = 0; i < numberOfdates; i++) {
+  for (let i = 0; i < numberOfdates + 1; i++) {
     const button = document.querySelector(`.navBtn${i}`);
     button.addEventListener("click", () => {
       changeDisplayRound(i);
@@ -202,51 +230,62 @@ const addEvenetListenersToButtons = () => {
     changeDisplayRound(currentPosDisplay - 1);
   });
   forwardButton.addEventListener("click", () => {
-    if (currentPosDisplay === numberOfdates - 1) return;
+    if (currentPosDisplay === numberOfdates) return;
     changeDisplayRound(currentPosDisplay + 1);
   });
 };
 
 //add event listeners to forms
 const addEvenetListenersToForms = () => {
-  for (let i = 0; i < numberOfdates; i++) {
+  for (let i = 0; i < numberOfdates + 1; i++) {
     let nameOfForm = `formNumber${i}`;
     const formElement = document.querySelector("." + nameOfForm);
-    const numberOfGames = arrayOfCountersPerDay[i];
     formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-      for (let j = 0; j < numberOfGames; j++) {
-        const pElement = document.querySelector(
-          `.${nameOfForm} .gameNumber${j}`
-        );
-        const api_ID = pElement.getAttribute("id");
-        const homeTeamScore = document.querySelector(
-          `.${nameOfForm} .gameNumber${j} #homeTeamScore`
-        ).value;
-        const awayTeamScore = document.querySelector(
-          `.${nameOfForm} .gameNumber${j} #awayTeamScore`
-        ).value;
-        const homeTeamName = document.querySelector(
-          `.${nameOfForm} .gameNumber${j} .homeTeamName`
-        ).textContent;
-        const awayTeamName = document.querySelector(
-          `.${nameOfForm} .gameNumber${j} .awayTeamName`
-        ).textContent;
-        const winner = getWinner(
-          homeTeamScore,
-          homeTeamName,
-          awayTeamName,
-          awayTeamScore
-        );
-        const finalScore = homeTeamScore + ":" + awayTeamScore;
-        const betDetailsObject = { api_ID: Number(api_ID), finalScore, winner };
-        addBetPerMatch(userNameHref.textContent, betDetailsObject).catch(
-          (err) => console.log(err)
-        );
+      if (!i) {
+        addEvenetListenersToOpeningBet();
+      } else {
+        const numberOfGames = arrayOfCountersPerDay[i];
+        for (let j = 0; j < numberOfGames; j++) {
+          const pElement = document.querySelector(
+            `.${nameOfForm} .gameNumber${j}`
+          );
+          const api_ID = pElement.getAttribute("id");
+          const homeTeamScore = document.querySelector(
+            `.${nameOfForm} .gameNumber${j} #homeTeamScore`
+          ).value;
+          const awayTeamScore = document.querySelector(
+            `.${nameOfForm} .gameNumber${j} #awayTeamScore`
+          ).value;
+          const homeTeamName = document.querySelector(
+            `.${nameOfForm} .gameNumber${j} .homeTeamName`
+          ).textContent;
+          const awayTeamName = document.querySelector(
+            `.${nameOfForm} .gameNumber${j} .awayTeamName`
+          ).textContent;
+          const winner = getWinner(
+            homeTeamScore,
+            homeTeamName,
+            awayTeamName,
+            awayTeamScore
+          );
+          const finalScore = homeTeamScore + ":" + awayTeamScore;
+          const betDetailsObject = { api_ID: Number(api_ID), finalScore, winner };
+          addBetPerMatch(userNameHref.textContent, betDetailsObject).catch(
+            (err) => console.log(err)
+          );
+        }
       }
     });
   }
 };
+
+
+const addEvenetListenersToOpeningBet = () => {
+  const selectWinner = document.querySelector('.form-select');
+  addOpeningBet(userNameHref.textContent, selectWinner.value);
+};
+
 
 //get winner of the game form score
 const getWinner = (
@@ -299,7 +338,7 @@ const calculatorSumOfHours = (dateAndTimeObject) => {
 //check if the bet date is over
 const updateDependOnDate = () => {
   const dateAndTimeObj = getCurrentTime();
-  for (let i = 0; i < numberOfdates; i++) {
+  for (let i = 1; i < numberOfdates; i++) {
     const arrayOfDate = datesArray[i].split("/");
 
     //create time and date object
