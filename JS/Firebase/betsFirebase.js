@@ -38,6 +38,26 @@ export const addBetPerMatch = async (userName, betDetailsObject) => {
   } else await addDoc(userBetsColRef, { ...betDetailsObject });
 };
 
+//Add bet to collection user->Bets
+export const addOpeningBet= async (userName, winnerName) => {
+  const user = await getUserObjectFromUserName(userName);
+  const userBetsColRef = await collection(db, `users/${user.id}/Bets`);
+  const q = query(
+    userBetsColRef,
+    where("api_ID", "==", 'OpeningBet')
+  );
+  //return number of doc depand on query
+  const snapshot = await getCountFromServer(q);
+  if (snapshot.data().count) {
+    const docs = await getDocs(q);
+    let bet;
+    //only one element bet
+    docs.forEach((doc) => (bet = { ...doc.data(), id: doc.id }));
+    const docRef = await doc(db, `users/${user.id}/Bets`, bet.id);
+    await updateDoc(docRef, { winner: winnerName });
+  }
+};
+
 //getting array of Bets IDS:
 export const getArrayOfBets = async (userID) => {
   const betsColRef = collection(db, `users/${userID}/Bets`);
