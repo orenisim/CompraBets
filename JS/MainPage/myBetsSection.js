@@ -153,6 +153,8 @@ let arrayOfCountersPerDay;
 //array of dates
 let datesArray;
 
+
+//Main Function!!!
 //get matches from db and update web
 getMatchesFromDB(auth).then((arrayOfMatches) => {
   datesArray = getMatchesDatesArray(arrayOfMatches);
@@ -170,7 +172,9 @@ getMatchesFromDB(auth).then((arrayOfMatches) => {
   createBetButtons(numberOfdates);
   addEvenetListenersToForms();
   updateDependOnDate();
+  displayBetsFromLocalStorage();
 });
+
 
 //Defalut position
 let currentPosDisplay = 0;
@@ -272,6 +276,7 @@ const addEvenetListenersToForms = () => {
             awayTeamScore
           );
           const finalScore = homeTeamScore + ":" + awayTeamScore;
+          addBetToLocalStorge(pElement, finalScore);
           const betDetailsObject = { api_ID: Number(api_ID), finalScore, winner };
           addBetPerMatch(userNameHref.textContent, betDetailsObject).catch(
             (err) => console.log(err)
@@ -282,6 +287,32 @@ const addEvenetListenersToForms = () => {
   }
 };
 
+const addBetToLocalStorge = (pElement, finalScore) => {
+  const api_ID = pElement.getAttribute("id");
+  localStorage.setItem(api_ID, finalScore);
+}
+
+const displayBetsFromLocalStorage = () => {
+  const collectionOfPargarph = document.querySelectorAll('p');
+  const arrayOfPargarph = Array.from(collectionOfPargarph);
+  arrayOfPargarph.forEach(p => {
+    const finalScoreLS = localStorage.getItem(p.id);
+    if (finalScoreLS) {
+      let homeTeamInput, awayTeamInput;
+      p.childNodes.forEach(child => {
+        if (child.id == "homeTeamScore") {
+          homeTeamInput = child;
+        }
+        if (child.id == "awayTeamScore") {
+          awayTeamInput = child;
+        }
+      })
+      const finalScore = finalScoreLS.split(':');
+      homeTeamInput.value = finalScore[0];
+      awayTeamInput.value = finalScore[1];
+    }
+  })
+}
 //get winner of the game form score
 const getWinner = (
   homeTeamScore,
@@ -370,7 +401,6 @@ const updateDependOnDate = () => {
   }
 };
 
-
 //if current date and time is higher then form date and time disabled the form
 const updateDependOnDateDisplay = (currentSumOfHours, formSumOfHours, form, i) => {
   if (currentSumOfHours > formSumOfHours) {
@@ -401,5 +431,6 @@ const updateDependOnDateDisplay = (currentSumOfHours, formSumOfHours, form, i) =
       until end of bet!</h6>`;
   }
 }
+
 
 //End of My Bets
