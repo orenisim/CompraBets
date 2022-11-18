@@ -5,7 +5,7 @@ import {
   collection,
   getDocs,
   getDoc, //init
-  addDoc, //add  
+  addDoc, //add
   query,
   where, //QUERIES
   orderBy,
@@ -14,7 +14,7 @@ import {
   getCountFromServer,
   doc,
   onSnapshot,
-} from 'firebase/firestore'
+} from "firebase/firestore";
 
 const matchesColRef = collection(db, "matches");
 
@@ -46,17 +46,17 @@ const getCurrentScore = async (userID) => {
 
 //checking the score and return the amount of points that the user earned.
 const checkingScore = async (apiID, userID) => {
-  const gameObject = await getGameObject(apiID)
+  const gameObject = await getGameObject(apiID);
   const realScore = gameObject.finalScore;
   const realWinner = gameObject.winner;
-  const betObject = await getBetObject(apiID, userID)
+  const betObject = await getBetObject(apiID, userID);
   const betScore = betObject.finalScore;
   const betWinner = betObject.winner;
 
-  //super score = 10
-  if (realScore == betScore) return 10;
-  //regular score = 5
-  else if (realWinner == betWinner) return 5;
+  //super score = 3
+  if (realScore == betScore) return 3;
+  //regular score = 1
+  else if (realWinner == betWinner) return 1;
   //false guess = 0
   else return 0;
 };
@@ -85,7 +85,6 @@ const updateScore = async () => {
   }
 };
 
-
 updateScore()
-.then(() => console.log('Score is been updated!'))
-.catch(err => console.log(err));
+  .then(() => console.log("Score is been updated!"))
+  .catch((err) => console.log(err));
