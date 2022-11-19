@@ -74,11 +74,11 @@ const updateScore = async () => {
   for (let i = 0; i < arrayOfUsersID.length; i++) {
     const userID = arrayOfUsersID[i];
     let totalSuperScore = 0;
+    let totalPoints = 0;
     let currentSuperScore = await getCurrentsuperScore(userID);
     let currentPoints = await getCurrentScore(userID);
     const userColRef = await doc(db, "users", userID);
     const arrayOfUserBets = await getArrayOfBets(userID);
-    let totalPoints = currentPoints;
     for (const bet of arrayOfUserBets) {
       let api_ID = bet.api_ID;
       //needs to check only in case to ignore of empty documents --> inside the if is only tests right now...

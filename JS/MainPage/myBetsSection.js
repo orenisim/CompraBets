@@ -99,6 +99,8 @@ const getMatchesDatesArray = (arrayOfMatches) => {
 const addMatchToForm = (form, match, counter, index) => {
   //check if where to insert the match, first col or second col
   const rowName = `form${index}Row${Math.floor(counter / 2)}`;
+  //if bigger than group stage 
+  if(!match.group) match.group = match.stage;
   //if even first col, odd second col
   if (!(counter % 2)) {
     form.innerHTML += `
