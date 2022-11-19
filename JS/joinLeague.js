@@ -1,5 +1,10 @@
 //Header JavaScript
-import { auth, logOutUser, getUserObjectFromUserName, updateLeagueInUserCollection } from "./Firebase/usersFirebase.js";
+import {
+  auth,
+  logOutUser,
+  getUserObjectFromUserName,
+  updateLeagueInUserCollection,
+} from "./Firebase/usersFirebase.js";
 import { addLeague, getLeagues } from "./Firebase/leaguesFirebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
 
@@ -9,11 +14,12 @@ onAuthStateChanged(auth, (user) => {
     window.location = "../index.html";
   }
   const userObject = getUserObjectFromUserName(user.displayName)
-    .then(userObject => {
+    .then((userObject) => {
       if (userObject.league) {
-        window.location = "./mainPage.html"
+        window.location = "./mainPage.html";
       }
-    }).catch(err => console.log(err));
+    })
+    .catch((err) => console.log(err));
   userNameHref.textContent = user.displayName;
 });
 
@@ -87,7 +93,7 @@ const leagueName = document.querySelector("#leagueName");
 const password = document.querySelector("#password");
 const submitButton = document.querySelector("#submitButton");
 
-submitButton.addEventListener("click", e => {
+submitButton.addEventListener("click", (e) => {
   e.preventDefault();
   const league = {
     name: leagueName.value.toLowerCase(),
@@ -95,12 +101,14 @@ submitButton.addEventListener("click", e => {
   };
   addLeague(league)
     .then(() => {
-      updateLeagueInUserCollection(userNameHref.textContent, league.name)
-        .then(() => {
-          alert('DB Update');
+      updateLeagueInUserCollection(userNameHref.textContent, league.name).then(
+        () => {
+          alert("DB Update");
           window.location = "./mainPage.html";
-        });
-    }).catch(err => console.log(err));
+        }
+      );
+    })
+    .catch((err) => console.log(err));
 });
 
 getLeagues()
