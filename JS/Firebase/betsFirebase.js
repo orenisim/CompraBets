@@ -1,18 +1,14 @@
 import { db, getUserObjectFromUserName } from "./usersFirebase.js";
 
 import {
-  getFirestore,
   collection,
   getDocs, //init
   addDoc, //add
   query,
   where, //QUERIES
-  orderBy,
-  serverTimestamp,
-  getDoc,
   updateDoc,
   getCountFromServer,
-  doc,
+  doc
 } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 
 //Add bet to collection user->Bets

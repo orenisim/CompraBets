@@ -1,16 +1,11 @@
 import { db, updateLeagueInUserCollection } from "./usersFirebase.js";
 import {
-  getFirestore,
   collection,
   getDocs, //init
   addDoc, //add
   query,
   where, //QUERIES
-  orderBy,
-  serverTimestamp,
-  getDoc,
   updateDoc,
-  getCountFromServer,
   doc
 } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 

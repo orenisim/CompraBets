@@ -18,9 +18,6 @@ import {
   addDoc, //add
   query,
   where,
-  getDoc, //QUERIES
-  orderBy,
-  serverTimestamp,
   updateDoc,
   getCountFromServer,
   doc,

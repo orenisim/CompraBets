@@ -1,19 +1,13 @@
 import { db, getArrayOfIDfromUsers } from "../JS/Firebase/usersFirebase.js";
 import { getArrayOfBets } from "../JS/Firebase/betsFirebase.js";
 import {
-  getFirestore,
   collection,
   getDocs,
   getDoc, //init
-  addDoc, //add
   query,
   where, //QUERIES
-  orderBy,
-  serverTimestamp,
   updateDoc,
-  getCountFromServer,
-  doc,
-  onSnapshot,
+  doc
 } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 
 const matchesColRef = collection(db, "matches");
