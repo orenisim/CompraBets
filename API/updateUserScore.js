@@ -44,6 +44,13 @@ const getCurrentScore = async (userID) => {
   return docData.data().score;
 };
 
+//getting the current superScore from the user
+const getCurrentsuperScore = async (userID) => {
+  const docRef = await doc(db, "users", userID);
+  const docData = await getDoc(docRef);
+  return docData.data().superScore;
+};
+
 //checking the score and return the amount of points that the user earned.
 const checkingScore = async (apiID, userID) => {
   const gameObject = await getGameObject(apiID);
@@ -66,6 +73,7 @@ const updateScore = async () => {
   const arrayOfUsersID = await getArrayOfIDfromUsers();
   for (let i = 0; i < arrayOfUsersID.length; i++) {
     const userID = arrayOfUsersID[i];
+    let currentSuperScore = getCurrentsuperScore(userID);
     let currentPoints = await getCurrentScore(userID);
     const userColRef = await doc(db, "users", userID);
     const arrayOfUserBets = await getArrayOfBets(userID);
@@ -74,12 +82,19 @@ const updateScore = async () => {
       let api_ID = bet.api_ID;
       //needs to check only in case to ignore of empty documents --> inside the if is only tests right now...
       let addPoints = await checkingScore(api_ID, userID);
+      let totalSuperScore;
+      if (addPoints == 3) totalSuperScore++;
       totalPoints += addPoints;
     }
     console.log(`user ${userID} earned: ${totalPoints}`);
     if (totalPoints > currentPoints) {
       await updateDoc(userColRef, {
         score: totalPoints,
+      });
+    }
+    if (totalSuperScore > currentSuperScore) {
+      await updateDoc(userColRef, {
+        superScore: totalSuperScore,
       });
     }
   }

@@ -76,6 +76,7 @@ export const createUser = async (
         lastName,
         league: "",
         score: 0,
+        superScore: 0,
       });
       await addBetsCollection(userName);
     }
@@ -88,8 +89,8 @@ const addBetsCollection = async (userName) => {
   const userID = userObject.id;
   const userBetsColRef = collection(db, `users/${userID}/Bets`);
   await addDoc(userBetsColRef, {
-    api_ID: 'OpeningBet',
-    winner: ""
+    api_ID: "OpeningBet",
+    winner: "",
   });
 };
 //getting array of users ID
@@ -156,4 +157,3 @@ export const getMatchesFromDB = async (auth) => {
   arrayOfData.forEach((matchData) => arrayOfMatches.push(matchData.data()));
   return arrayOfMatches;
 };
-
