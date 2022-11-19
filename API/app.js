@@ -29,37 +29,39 @@ const getMatchesFromAPI = async () => {
 };
 
 const addMatch = async (match) => {
-  const fullDate = match.utcDate.split("T");
-  //date
-  let date = fullDate[0];
-  date = fullDate[0].split("-");
-  date = date[2] + "/" + date[1] + "/" + date[0];
-  //time
-  let time = fullDate[1].substring(0, 8);
-  time = fullDate[1].split(":");
-  time = Number(time[0]) + 2 + ":" + time[1];
-  //group name
   if (match.stage == "GROUP_STAGE") {
-    const groupName = match.group.split("_");
-    match.group = groupName[0] + " " + groupName[1];
+    const fullDate = match.utcDate.split("T");
+    //date
+    let date = fullDate[0];
+    date = fullDate[0].split("-");
+    date = date[2] + "/" + date[1] + "/" + date[0];
+    //time
+    let time = fullDate[1].substring(0, 8);
+    time = fullDate[1].split(":");
+    time = Number(time[0]) + 2 + ":" + time[1];
+    //group name
+    if (match.stage == "GROUP_STAGE") {
+      const groupName = match.group.split("_");
+      match.group = groupName[0] + " " + groupName[1];
+    }
+    //group stage
+    const stage = match.stage.split("_");
+    match.stage = stage[0] + " " + stage[1];
+    await addDoc(matchesColRef, {
+      awayTeam: match.awayTeam.name,
+      date: date,
+      gameWeek: match.matchday,
+      group: match.group,
+      homeTeam: match.homeTeam.name,
+      iconAwayTeamURL: match.awayTeam.crest,
+      iconHomeTeamURL: match.homeTeam.crest,
+      stage: match.stage,
+      time: time,
+      winner: match.score.winner,
+      finalScore: match.score.fullTime.home + ":" + match.score.fullTime.away,
+      api_ID: match.id,
+    });
   }
-  //group stage
-  const stage = match.stage.split("_");
-  match.stage = stage[0] + " " + stage[1];
-  await addDoc(matchesColRef, {
-    awayTeam: match.awayTeam.name,
-    date: date,
-    gameWeek: match.matchday,
-    group: match.group,
-    homeTeam: match.homeTeam.name,
-    iconAwayTeamURL: match.awayTeam.crest,
-    iconHomeTeamURL: match.homeTeam.crest,
-    stage: match.stage,
-    time: time,
-    winner: match.score.winner,
-    finalScore: match.score.fullTime.home + ":" + match.score.fullTime.away,
-    api_ID: match.id,
-  });
 };
 
 const updateMatches = async () => {
