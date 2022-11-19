@@ -10,7 +10,7 @@ export const userNameHref = document.querySelector('.userNameHref');
 // Get user that already log in
 onAuthStateChanged(auth, async (user) => {
     if (user == null) {
-        window.location = "./index.html";
+        window.location = "../index.html";
     }
     const userObject = await getUserObjectFromUserName(user.displayName)
     if (!userObject.league) {
@@ -28,7 +28,7 @@ const logOutButton = document.querySelector('.logOutButton');
 logOutButton.addEventListener('click', () => {
     logOutUser().then(() => {
         alert("log out");
-        window.location = "./index.html";
+        window.location = "../index.html";
     })
 });
 

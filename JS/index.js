@@ -14,8 +14,8 @@ logInForm.addEventListener("submit", (e) => {
       logInForm.classList.add("was-validated");
       errmsg.textContent = '';
       logInForm.reset();
-      if (userObject.league) window.location = "./mainPage.html";
-      else window.location = "./joinLeague.html";
+      if (userObject.league) window.location = "./html/mainPage.html";
+      else window.location = "./html/joinLeague.html";
     })
     .catch(err => {
       if (err.message == 'Firebase: Error (auth/wrong-password).') {

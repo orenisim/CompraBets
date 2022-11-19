@@ -30,7 +30,7 @@ const logOutButton = document.querySelector('.logOutButton');
 logOutButton.addEventListener('click', () => {
   logOutUser().then(() => {
     alert("log out");
-    window.location = "./index.html";
+    window.location = "../index.html";
   })
 });
 

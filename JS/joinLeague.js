@@ -6,7 +6,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.12.1/fi
 // Get user that already log in
 onAuthStateChanged(auth, (user) => {
   if (user == null) {
-    window.location = "./index.html";
+    window.location = "../index.html";
   }
   const userObject = getUserObjectFromUserName(user.displayName)
     .then(userObject => {
@@ -22,7 +22,7 @@ const logOutButton = document.querySelector(".logOutButton");
 logOutButton.addEventListener("click", () => {
   logOutUser().then(() => {
     alert("log out");
-    window.location = "./index.html";
+    window.location = "../index.html";
   });
 });
 
