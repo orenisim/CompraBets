@@ -71,19 +71,3 @@ const updateMatches = async () => {
 updateMatches()
   .then(() => console.log('Done!'))
   .catch((err) => console.log(err));
-
-  
-/*PLAN B= Run using outside server.
-
-fetch(
-  `https://api.allorigins.win/get?url=${encodeURIComponent(
-    "http://api.football-data.org/v4/competitions/"
-  )}`
-)
-  .then((response) => {
-    if (response.ok) return response.json();
-    throw new Error("Network response was not ok.");
-  })
-  .then((data) => console.log(data.contents));
-  
-  */

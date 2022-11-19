@@ -283,6 +283,8 @@ const addEvenetListenersToForms = () => {
           );
         }
       }
+      const betButton = document.querySelector(`#submitFormNumber${i}`);
+      betButton.value = "Bet Sent!" 
     });
   }
 };
