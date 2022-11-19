@@ -38,13 +38,11 @@ logOutButton.addEventListener('click', () => {
 
 const myLeagueLink = document.querySelector("#navMyLeague");
 const myBetsLink = document.querySelector("#navMyBets");
-const friendsBetsLink = document.querySelector("#navFriendsBets");
 const rulesLink = document.querySelector("#navRules");
 
 // the indicators to the different pages in the main page
 const myLeagueDiv = document.querySelector("#myLeagueDiv");
 const myBetsDiv = document.querySelector("#myBetsDiv");
-const friendsBetsDiv = document.querySelector("#friendsBetsDiv");
 const rulesDiv = document.querySelector("#rulesDiv");
 
 let currentActiveNav = myLeagueLink;
@@ -67,10 +65,6 @@ myLeagueLink.addEventListener("click", () => {
 
 myBetsLink.addEventListener("click", () => {
   changeDisplay(myBetsLink, myBetsDiv);
-});
-
-friendsBetsLink.addEventListener("click", () => {
-  changeDisplay(friendsBetsLink, friendsBetsDiv);
 });
 
 rulesLink.addEventListener("click", () => {
