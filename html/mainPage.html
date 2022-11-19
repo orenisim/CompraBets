@@ -1,136 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CompraBets</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../Samples/cssSamples.css" />
+    <link rel="stylesheet" href="../Styles/mainPage.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CompraBets</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
-  <link rel="stylesheet" href="../Samples/cssSamples.css" />
-  <link rel="stylesheet" href="../Styles/mainPage.css" />
-</head>
-
-<body>
-  <!-- CompraBet logo format inside the site + User Section -->
-  <nav class="navbar bg-light opacity-75">
-    <div class="container-fluid my-3">
-      <a class="navbar-brand" href="./mainPage.html"><img src="../Images/Logo/green/png/logo-no-background.png"
-          alt="compraBetsLogo" class="compraBetsLogo" /></a>
-      <div class="userSection me-5 mt-2">
-        <span class="userWelcome">
-          Hello
-          <a href="./userPage.html" class="userNameHref text-success fw-bold"></a>
-          , Welcome back!
-        </span>
-        <input type="button" value="Log-Out"
-          class="logOutButton btn btn-sm btn-outline-dark fw-bold p-0 px-1 mb-1 border-0" />
+  <body>
+    <!-- CompraBet logo format inside the site + User Section -->
+    <nav class="navbar bg-light opacity-75">
+      <div class="container-fluid my-3">
+        <a class="navbar-brand" href="./mainPage.html"
+          ><img
+            src="../Images/Logo/green/png/logo-no-background.png"
+            alt="compraBetsLogo"
+            class="compraBetsLogo"
+        /></a>
+        <div class="userSection me-5 mt-2">
+          <span class="userWelcome">
+            Hello
+            <a
+              href="./userPage.html"
+              class="userNameHref text-success fw-bold"
+            ></a>
+            , Welcome back!
+          </span>
+          <input
+            type="button"
+            value="Log-Out"
+            class="logOutButton btn btn-sm btn-outline-dark fw-bold p-0 px-1 mb-1 border-0"
+          />
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <div class="container mx-auto shadow p-3 my-5 rounded">
-    <!-- the nav buttons in the top of the main page -->
-    <div class="btn-group">
-      <button class="btn btn-success active" aria-current="page" id="navMyLeague">
-        My League
-      </button>
-      <button class="btn btn-success" id="navMyBets">My Bets</button>
-      <button class="btn btn-success" id="navRules">Rules</button>
-    </div>
+    <div class="container mx-auto shadow p-3 my-5 rounded">
+      <!-- the nav buttons in the top of the main page -->
+      <div class="btn-group">
+        <button
+          class="btn btn-success active"
+          aria-current="page"
+          id="navMyLeague"
+        >
+          My League
+        </button>
+        <button class="btn btn-success" id="navMyBets">My Bets</button>
+        <button class="btn btn-success" id="navRules">Rules</button>
+      </div>
 
-    <!-- the my league table -->
-    <div id="myLeagueDiv">
-      <div class="row d-flex justify-content-center my-3 p-1">
-        <div class="col col-lg-12 mb-4 mb-lg-0">
-          <div class="card mb-3">
-            <div class="card-body p-4">
-              <table class="table leagueTable table-primary table-hover">
-                <h4 class="text-center my-1">
-                  League Name:
-                  <span id="leageNameSpan" class="fw-bold text-primary fs-3"></span>
-                </h4>
-                <h6 class="text-center text-muted mt-0">
-                  <span id="numOfPlayersSpan"></span> players
-                </h6>
-                <hr class="mb-4" />
-                <tr>
-                  <th>#Position</th>
-                  <th>Name</th>
-                  <th>Score</th>
-                  <th>Winning Team</th>
-                  <th>Super Score</th>
-                </tr>
-              </table>
-              <hr class="mb-3 mt-4" />
+      <!-- the my league table -->
+      <div id="myLeagueDiv">
+        <div class="row d-flex justify-content-center my-3 p-1">
+          <div class="col col-lg-12 mb-4 mb-lg-0">
+            <div class="card mb-3">
+              <div class="card-body p-4">
+                <table class="table leagueTable table-primary table-hover">
+                  <h4 class="text-center my-1">
+                    League Name:
+                    <span
+                      id="leageNameSpan"
+                      class="fw-bold text-primary fs-3"
+                    ></span>
+                  </h4>
+                  <h6 class="text-center text-muted mt-0">
+                    <span id="numOfPlayersSpan"></span> players
+                  </h6>
+                  <hr class="mb-4" />
+                  <tr>
+                    <th>#Position</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Winning Team</th>
+                    <th>Super Score</th>
+                  </tr>
+                </table>
+                <hr class="mb-3 mt-4" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- my bets page -->
-    <div id="myBetsDiv" class="d-none">
-      <div class="row d-flex justify-content-center my-4">
-        <div class="col col-lg-10 mb-4 mb-lg-0">
-          <div class="card mb-3">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card-body p-4">
-                  <nav class="mb-4 mt-1">
-                    <ul class="buttonsPage-Item pagination justify-content-center"></ul>
-                  </nav>
+      <!-- my bets page -->
+      <div id="myBetsDiv" class="d-none">
+        <div class="row d-flex justify-content-center my-4">
+          <div class="col col-lg-10 mb-4 mb-lg-0">
+            <div class="card mb-3">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-body p-4">
+                    <nav class="mb-4 mt-1">
+                      <ul
+                        class="buttonsPage-Item pagination justify-content-center"
+                      ></ul>
+                    </nav>
 
-                  <div class="formsPerDate"></div>
+                    <div class="formsPerDate"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- rules of the game will be here -->
-    <div id="rulesDiv" class="d-none">
-      <div class="container mx-auto shadow p-3 my-5 rounded mb-2" id="rulesPage">
-        <h3 class="text-primary mt-1">About The Game</h3>
-        <hr class="mt-0"/>
-        <p>
-          The game will be active bettween 20.11.2022 - 18.12.2022 for the
-          FIFA world cup 2022 games. The final score of the Group stage games
-          will be determined after 90 min, and the final score of the Knockout
-          stage games will be determined after 120 min. Each user has to guess
-          which team will win the tournament until 19.11 at midnight, And
-          guessing the results of the games will be done until 12pm the
-          specific game day. The score calculation will be made every morning
-          and the score will be calculated according to the previous day's
-          games, thus the table will be updated every day until 12pm.
-        </p>
+      <!-- rules of the game will be here -->
+      <div id="rulesDiv" class="d-none">
+        <div
+          class="container mx-auto shadow p-3 my-5 rounded mb-2"
+          id="rulesPage"
+        >
+          <h3 class="text-primary mt-1">About The Game</h3>
+          <hr class="mt-0" />
+          <p>
+            The game will be active bettween 20.11.2022 - 18.12.2022 for the
+            FIFA world cup 2022 games. The final score of the Group stage games
+            will be determined after 90 min, and the final score of the Knockout
+            stage games will be determined after 120 min. Each user has to guess
+            which team will win the tournament until 20.11 at 12pm, and the
+            guesses of the game result will be done until 12pm at the specific
+            game day. Every morning the score will be calculated according to
+            the previous games day , thus the table will be updated every day
+            until 12pm.
+          </p>
 
-        <h3 class="mt-5 text-primary">The Score Calculation</h3>
-        <hr class="mt-0"/>
-        <ul>
-          <li>Guessing the winning team of the tournament = 10 points.</li>
-          <li>Guessing the correct winner or tie = 1 point.</li>
-          <li>Guessing the exact score (super score) = 3 points.</li>
-        </ul>
+          <h3 class="mt-5 text-primary">The Score Calculation</h3>
+          <hr class="mt-0" />
+          <ul>
+            <li>Guessing the winning team of the tournament = 10 points.</li>
+            <li>Guessing the correct winner or tie = 1 point.</li>
+            <li>Guessing the exact score (super score) = 3 points.</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- JavaScript -->
-  <script src="../JS/MainPage/general.js" type="module"></script>
-  <script src="../JS/MainPage/myBetsSection.js" type="module"></script>
-  <script src="../JS/MainPage/myLeagueSection.js" type="module"></script>
-</body>
+    <!-- JavaScript -->
+    <script src="../JS/MainPage/general.js" type="module"></script>
+    <script src="../JS/MainPage/myBetsSection.js" type="module"></script>
+    <script src="../JS/MainPage/myLeagueSection.js" type="module"></script>
+  </body>
 
-<footer class="bg-light text-center">
-  <!-- Copyright -->
-  <div class="text-center p-3 fw-bold">
-    © 2022 Copyright: Nir Nussbaum & Oren Nisim.
-  </div>
-  <!-- Copyright -->
-</footer>
-
+  <footer class="bg-light text-center">
+    <!-- Copyright -->
+    <div class="text-center p-3 fw-bold">
+      © 2022 Copyright: Nir Nussbaum & Oren Nisim.
+    </div>
+    <!-- Copyright -->
+  </footer>
 </html>
