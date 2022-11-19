@@ -14,7 +14,7 @@ import {
   getCountFromServer,
   doc,
   onSnapshot,
-} from "firebase/firestore";
+} from "https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js";
 
 const matchesColRef = collection(db, "matches");
 
@@ -73,7 +73,8 @@ const updateScore = async () => {
   const arrayOfUsersID = await getArrayOfIDfromUsers();
   for (let i = 0; i < arrayOfUsersID.length; i++) {
     const userID = arrayOfUsersID[i];
-    let currentSuperScore = getCurrentsuperScore(userID);
+    let totalSuperScore = 0;
+    let currentSuperScore = await getCurrentsuperScore(userID);
     let currentPoints = await getCurrentScore(userID);
     const userColRef = await doc(db, "users", userID);
     const arrayOfUserBets = await getArrayOfBets(userID);
@@ -81,8 +82,8 @@ const updateScore = async () => {
     for (const bet of arrayOfUserBets) {
       let api_ID = bet.api_ID;
       //needs to check only in case to ignore of empty documents --> inside the if is only tests right now...
+      if(api_ID == 'OpeningBet') continue;
       let addPoints = await checkingScore(api_ID, userID);
-      let totalSuperScore;
       if (addPoints == 3) totalSuperScore++;
       totalPoints += addPoints;
     }

@@ -69,3 +69,4 @@ export const joinLeague = async (userName, legaueName, pass) => {
     throw TypeError("Wrong league password");
   }
 }
+

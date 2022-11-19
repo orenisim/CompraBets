@@ -157,3 +157,40 @@ export const getMatchesFromDB = async (auth) => {
   arrayOfData.forEach((matchData) => arrayOfMatches.push(matchData.data()));
   return arrayOfMatches;
 };
+
+
+export const getArrayOfUsersByLeagueName = async (leagueName) => {
+  const q = query(
+    usersColRef,
+    where("league", "==", leagueName)
+  );
+  const docs = await getDocs(q);
+  let array = [];
+  docs.forEach(doc => {
+    const docData = { ...doc.data() };
+    const userID = doc.id;
+    const winningTeamBet = GetWinningTeamByUserID(userID);
+    const player = {
+      displayName: docData.displayName,
+      score: docData.score,
+      superScore: docData.superScore,
+      winner: winningTeamBet
+    }
+    array.push({...player});
+  })
+  for (const user of array) {
+    user.winner = await user.winner;
+  }
+  return array;
+}
+
+export const GetWinningTeamByUserID = async (userID) => {
+  const betsColRef = collection(db, `users/${userID}/Bets`);
+  const q = query(betsColRef, where("api_ID", "==", 'OpeningBet'));
+  const data = await getDocs(q);
+  let openingBetObject;
+  data.forEach((doc) => (openingBetObject = { ...doc.data(), id: doc.id }));
+  const winnngTeamBet = openingBetObject.winner;
+  if (!winnngTeamBet.length) return "Still thinking";
+  return winnngTeamBet;
+}
