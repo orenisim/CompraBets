@@ -421,7 +421,7 @@ const updateDependOnDateDisplay = (currentSumOfHours, formSumOfHours, form, i) =
       <h1 class="text-muted">Bet Over!</h1>`;
     } else {
       form.innerHTML = `
-      <h3>Game Day ${i} <span class="text-muted fs-6 ms-1">${datesArray[i]
+      <h3>Game Day ${i} <span class="text-muted fs-6 ms-1">${datesArray[i - 1]
         }</span></h3>
       <hr class="mt-0 mb-4">
       <h1 class="text-muted">Bet Over!</h1>`;
